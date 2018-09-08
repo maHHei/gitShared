@@ -1,0 +1,617 @@
+								/*要进行嵌入式开发必须有交叉编译工具，交叉编译工具可以编译为该嵌入式平台下运行的程序*/
+1.主要有三种窗口：windows窗口，组件窗口（Qweight），消息窗口
+
+2.把按钮放在主窗口构造里面，按钮对象作为主窗口的成员变量
+
+3.信号（signal）和槽（slot）：QT对象之间通信的接口
+connect(&信号发出者,&信号发出者所在的类::待处理信号函数,&信号接受者,&信号接受者所在类::槽函数)	
+如:connect(&b1,&QPushButton::pressed,this,&MyWidget::close);//connect连接信号函数和槽函数
+或qt4：connect(&b1,SIGNAL(pressed),this,SLOT(close));//这些槽函数必须定义在slots里面，SIGNAL和SLOT是宏定义函数，不做错误检查，尽量不用
+信号函数和槽函数一致（参数和返回值一致）
+信号是没有返回值的，所以槽函数一定没有返回值
+类比：信号：短信  	槽函数：接收短信的手机
+有信号重载的时候就用函数指针来接收
+
+4.信号的声明必须声明在signals（与public这些相当）下
+    /*信号必须有signals关键字来声明（与普通函数一样声明）
+     *信号没有返回值但是可以有参数
+     * 信号就是函数声明，无需定义
+     * 使用：emit mySignal();相当于发送信号（什么时候发送就是你的事了）
+    */
+
+5.使用别人的项目文件：必须先删除 .pro.user 文件，因为这个是以前用户构建项目时的目录
+
+6.Lambda表达式（c++11 匿名表达式）
+[]()
+{
+	
+}
+//在[]内=号表示把外部所有局部变量，类中所有成员变量以值传递（只读）
+//this表示把类中所有成员变量以值传递
+//&把外部所有局部变量引用传递
+//要使用Lambda表达式必须在qt工程文件中添加 CONFIG += C++11
+exec()函数：等待用户操作（可以作为模态对话框的实现）
+
+7.坐标系统是相对的，相对于它的父对象而言（主窗口就是相对于屏幕）
+
+8.子对象如果是动态分配内存的，不需要手动来释放对象内存，系统执行自动释放的操作（qt内部的内存回收机制）
+前提：
+1)指定父对象后
+2)必须直接或者间接继承QOject类
+
+8.布局
+水平 垂直 网格
+布局属性
+
+9.qt样式表（跟css差不多，把标签改为控件就行了）
+
+10.字符串组包（arg内的内容替换%的）
+	/*
+     * QString str=QString("abc %1 ^_^ %2").arg(123).arg("hide");
+     * 则：str=abc 123 ^_^ hide
+    */
+	
+11.
+QMouseEvent(鼠标事件)
+QMousePressEvent  QMouseReleaseEvent  QMouseMoveEvent
+QTimerEvent(定时器事件)   
+QCloseEvent(窗口关闭事件)
+
+12.事件接收和忽略函数：
+accept()接收函数，接收事件不往下传,如果事件处理的是当前类的话，那与没有没有两样，如果不是，那就可以阻止别的目标类进行响应
+ignore()忽略函数，不接收事件往下传递（给父组件传递，指的是setparent()这个父组件），同样的，ignore，如果是本类的信号，ignore之后就不会有响应，
+如果不是，ignore后仍然其他类仍然响应该事件，因为向下传它会接收到事件
+
+13.事件处理器 event(QEvent *e)处理当前控件的所有事件(QEvent 必须转型后才能使用)
+
+14.事件过滤器（eventFilter(QObject *obj,QEvent *e)过滤的控件和事件）
+需要过滤的控件事件，必须让控件安装过滤器之后才能使用	installEventFilter(指定处理的对象)
+需要转换QEvent *为哪类事件，然后利用转换为的事件指向type得到具体的事件，比如；MouseEvent *p=(MouseEvent *)e;  if(p->type()==mousePresseEvent)
+过滤左键按下按钮的例子:
+if(obj == (QObject *)button)
+{
+	if(e->type() == QEvent::mousePressEvent)
+	{
+	
+	}
+}
+return QWidget::eventFilter(obj,e);//其他的还需要处理
+
+向窗口发送一个事件
+app.postEvent(QObject *,QEvent *); 如： app.postEvent(&widget,new QEvent(QEvent::User));
+app.sendEvent(QObject *,QEvent *);用法如上，sendEvent会等待事件处理完毕，事件使立即执行的
+QApplication获取主窗口
+app.topLevelWidgets().at(0);
+
+15.
+按钮类：QPushButton  QToolButton QRadioButton
+item：QListWidget
+容器类：QStackWidget（多页面手动切换） QWidget QFrame
+编辑类：QComboBox（下拉框，像qq切换账号那种下拉框）QLineEdit  QTextEdit
+显示类：QLabel QLcdNumber QProgressBar（进度条）
+
+16.自定义控件（提升）
+UI的控件的自定义控件（自己创建一个class，提升相当于连接控件）的父类要相同 
+选中ui控件->提升
+
+/*
+多个页面切换：stackWidget(利用setCurrentWidget设定当前页面)
+setValue设定进度条的当前值（利用定时器来设定），进度条需要设定最大最小值和当前值
+clear清空
+*/
+
+17.
+简单绘图
+set开头的函数是工具
+draw开头的函数是绘制的东西
+void paintEvent(QPaintEvent *)//当窗口需要重绘时会自动调用该事件函数，把需要绘制的图形放进该函数中便可以实现绘制
+使用update()相当于间接调用paintEvent，重绘整个窗口(手动更新窗口)
+
+QPainter画家类：QPainter p(this);//指定当前窗口为绘图对象或者用p.begin(指定绘图设备)（得用p.end()结束绘制）
+利用draw开头的public成员函数来绘制各种图像（可以按f1来查看可以绘制什么图像）
+pixmap为背景图像；
+
+QPen画笔类：单单画笔类是不能绘图的，所以得画家持有画笔即：p.setPen(QPen *),利用画笔可以设定绘制的线的
+各种属性，设定rgb颜色不能直接用rgb()得使用QColor(rgb(1,1,2))（这个只是设定rgb颜色并不是设定画笔颜色）;
+
+QBrush画刷类：设置闭合图形的填充颜色，也得把画刷交给画家
+
+
+消锯齿:painter.setRenderHint(QPainter::Antialiasing);
+平移:painter.translate(100,100);//下面画的图形移动x=100和y=100，需要变回来painter.translate(-100,-100)
+
+Bitmap（只能显示两种颜色，为qpixmap的派生类）和Pixmap的区别，同样的都是用drawPixmap来绘图，只是加载图片的方式不一样
+
+绘图设备
+QPixmap：针对屏幕进行优化了，和平台相关
+QImage:和平台无关，可以对图片像素点进行修改，在线程中绘图（比如地图）
+QPicture：保存绘图的状态（二进制文件）
+
+painter.end():表示绘图结束
+painter.begin():可以改变绘图设备
+
+高级绘图，场景进行作画，view进行显示
+#include <QGraphicsScene>//场景类,继承于QObject，相当于model
+#include <QGraphicsView> //显示场景类,间接继承于QWidget, 相当于model view，可以进行resize，而不是对场景类进行resize
+#include <QGraphicsLineItem> //需要绘图的类
+
+QGraphicsScene *scene = new QGraphicsScene(this);
+QGraphicsView *view = new QGraphicsView(this);
+view->setScene(scene);//添加场景，进行显示
+scene->addItem(new QGraphicsLineItem(QLineF(QPointF(0,0),QPoinF(100,100)));//添加需要画的图
+
+18.
+打开文件目录QFileDialog:	 getOpenFileName(打开文件，返回路径) getSaveFileName(保存文件,返回路径，通过QFile来保存)
+
+文件操作QFile:	setFileName()关联文件名字(路径)，open(以何种方式打开文件) readAll或者readLine(读取文件) close(关闭文件) write(文件保存) seek(定位到什么位置)
+
+读取文件信息QFileInfo:	fileName(获取文件名字)，suffix(获取文件后缀名)，size(获取文件大小)，created(获取文件创建的日期)
+
+二进制流方式操作文件QDataStream:	QDataStream stream(&file)（关联文件或者用setDevice关联设备）stream<<"heiheiei";(写入文件)	stream>>str;(读取文件到QString str变量，不过得与输入时格式对应)
+							用于将数据存盘，以固定的格式读出来
+
+文本流方式操作文件QTextStream:	写入文件与上面几乎一样，不过可以指定编码 setCodec（写入和读取时都可以指定），读取文件readLine()或者readall()
+
+创建内存文件QBuffer:	把数据写入到内存缓冲区中，open，write（写入内容），close(关闭)，可以在创建的时候指定一个字节数组（QBuffer(QByteArray *a),然后数据就存进这里），或者用buffer()取出
+						可以跟QDataStream一起使用，QDataStream stream(QBuffer *),利用 stream写入或读取数据(读取时必须把文件或设备？关掉)
+						
+						通过他的成员函数buffer()获得他的内容
+
+19，QString QByteArray char *之间的转换
+char *转为QString:QString str(char *);
+QByteArray转为char *:QByteArray a;    char *b=a.data();
+QString转为QByteArray:QString str="123";  QByteArray b=str.toUtf8();
+//读取中文必须utf-8，使读取出来的的中文可被qDebug()输出，必须加上toUtf8().data()
+
+20.便于调试的宏（Qt中需要打印的时候使用qDebug(),太长，用宏定义代替他）
+#define cout qDebug()<<"["<<__FILE__<<":"<<__LINE__<<"]"
+这样做的好处是:当你需要输出的时候，他会在前面先打印在那个文件中的第几行打印的，调试更加方便
+__FILE__和__LINE__(两根下划线 )是C语言的全局宏
+
+21.tcp通信（面向链接，得在项目文件中添加 network模块）
+获取当前主机的全部ip地址：QNetworkIterface::allAddresses();
+
+服务器端（注意段错误，如果通信套接字还没有建立便使用）
+有两个套接字：QTcpServer（监听套接字）和QTcpScoket（通信套接字），
+ tcpServer=new QTcpServer(this);//指定父对象的目的是为了自动管理资源
+ tcpServer->listen(QHostAddress::Any,8888);//监听所有地址的8888端口，监听和绑定整合在一起了
+ newConnection//如果链接成功，服务器自动触发信号（因为对于服务器而言通信套接字还不存在，使用是new）
+ //先判断是否存在未处理的链接，因为如果存在未处理链接，newConnection信号就不会触发了
+ while(tcpSocker->hasPendingConnections() == true)//利用下面语句全部取出
+ tcpSocket=tcpServer->nextPendingConnection();//取出建立好连接的QTcpSocket通信套接字
+ QString ip = tcpSocket->peerAddress().toString();//通过通信套接字获得对方的ip和端口号
+ qint16 port = tcpSocket->peerPort();
+ 当对方发送消息时会产生一个readyread信号，此时， tcpSocket->readAll();//读取获得的消息
+ 给对方发送消息，tcpSocket->write(QString);
+ tcpSocket->disconnectFromHost();//主动断开链接
+ tcpSocket->close();//关闭通信套接字，清空ip与端口号等
+ 
+ 客户端
+ 只有一个QTcpScoket（通信套接字）
+ tcpsocket->connectToHost(QHostAddress(IP),port);//主动链接到服务器
+ 如果链接建立成功，通信套接字会自动触发connected信号（因为自己建立套接字与对方链接）
+ 如果对方主动断开链接，会触发disconnected信号
+ 其余与服务器的通信套接字一样使用
+ 
+ 22.
+ Udp通信（面向非链接的不可靠通信）
+ 只有一个套接字（QUdpSocket）
+ 只需要绑定端口（bind），不需要监听（listen）ip
+ 一旦有数据发送到指定端口，则触发readyread信号
+ readDatagram()接收数据
+ writeDatagram()为发送数据
+ 
+ udp广播：255.255.255.255是定向广播地址，把数据广播向局域网中的所有指定的端口（缺点：易造成网络堵塞）
+ 
+ udp组播:
+		加入指定的组播地址便可以进行组内通信
+		组播地址是D类地址,必须进行QHostAddress::AnyIPv4和端口的绑定才能进行组播，比如:
+		udpSocket->bind(QHostAddress::AnyIPv4,1000);//只绑定IPv4的ip
+		udpSocket->joinMulticastGroup(QHostAddress("224.0.0.1"));//加入组播
+		udpSocket->leaveMulticastGroup(QHostAddress("224.0.0.1"));//退出组播
+		udpSocket->readDatagram(buf, sizeof(buf), &cliAddr, &port);//读取信息
+		udpSocket->writeDatagram(str.toUtf8(), QHostAddress(ip), port);//发送数据
+ 
+23.QTimer类，定时器类
+QTimer timer(this);
+timer.start(1000)//当timer启动时每1000ms会触发timerout信号，在槽函数中处理ui中的定时器lcdNumber
+
+24.创建线程（若有很复杂的数据处理时，要是多线程没开便会造成程序无响应，这时候就应该开多线程）
+1）自定义类，继承于QThread（创建类时继承于QObject）
+里面只有 void run()函数是线程处理函数，其他的都不是（不能直接调用run函数，只能通过start函数间接调用）
+start函数启动线程
+qiut函数(QThread的槽函数)是关闭线程，会等当前操作处理完成后才关闭线程，一般使用就是他
+terminate函数(QThread的槽函数)也是关闭线程，但是不会等待当前操作执行完毕就把线程关闭了
+wait函数是回收线程资源
+isRunning函数，表示线程已启动
+注意：
+	线程处理函数不能直接调用，要通过signal -- slot来调用
+	线程处理函数内部不允许操作图形界面
+
+24.connect 的第5个参数的作用，连接方式：默认，队列，直接
+在多线程中才有意义
+默认时，如果是多线程，默认使用队列，单线程，默认使用直接
+队列：槽函数所在的线程与接收者一样
+直接：槽函数所在线程与发送者线程一致
+
+
+25，mysql数据库操作（包含头文件#include <QSqlDatabase>，#include <QSqlError>，#include <QSqlQuery>）
+查看qt支持的数据库：QSqlDatabase::drivers()
+添加数据库：QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");//mysql数据库添加
+连接数据库
+    db.setHostName("127.0.0.1");//数据库服务器ip
+    db.setUserName("root");//数据库用户名
+    db.setPassword("133977");//链接数据库的密码
+    db.setDatabaseName("mysql");//使用哪个数据库
+检验数据库是否正确的打开：db.open()
+直接使用数据库语句的操作:
+			QSqlQuery query;
+			query.exec("数据库操作语句")
+//批量插入数据
+//Windows风格语句
+//预处理语句,? 相当于占位符
+    query.prepare("insert into student(name,age,score) values(?,?,?)");
+    //给字段设置内容,list
+    QVariantList nameList;
+    nameLiset << "小明" << "小花" <<  "小张";
+    QVariantList ageList;
+    ageList << 20 << 21 << 20;
+    QVariantList scoreList;
+    scoreList << 59 << 60 << 79;
+    
+    //给字段绑定相应的值，按顺序绑定
+    query.addBindValue(nameList);
+    query.addBindValue(ageList);
+    query.addBindValue(scoreList);
+    
+    //执行预处理命令
+    query.execBatch();
+//oracle风格批量插入操作
+//占位符为":+自定义名字"
+    query.prepare("insert into student(name,age,score) values(:name,:age,:score)");
+	给字段设置内容同上
+	给字段绑定：query.bindValue(":name",nameList);//这个方法不局限于顺序
+	执行预处理命令：query.execBatch();
+	
+//开启一个事务(设定一个保存点，从该点往下的操作都可以撤销)
+    QSqlDatabase::database().transaction();//获取当前操作的数据库,创建一个事务点
+    QSqlQuery query;
+    query.exec(str);	
+	
+//确定事务操作，不可回滚
+    QSqlDatabase::database().commit();	
+
+//回滚，撤销
+    QSqlDatabase::database().rollback();
+	
+query.exec("select * from student");
+    while(query.next() == true)//select出来的数据进行一行一行遍历
+    {
+        //取出当前行内容,从第0列开始
+        qDebug()<<query.value(0).toInt()
+               <<query.value(1).toString()
+              <<query.value("age").toInt()
+             <<query.value("score").toInt();
+    }
+	
+图形界面操作数据库
+QSqlTableModel model;//创建数据库模型
+model.setTabel(设置的表名);
+model.setFilter("列名=记录");//设置过滤规则
+model.select();//获取整个表的数据
+int ret = modle.rowCount();//获取数据行
+for(int i=0; i<ret; i++)
+{
+	QSqlRecord record = model.record();//获取记录
+	int count = record.count();
+	for(int j=0; j<count; j++)
+	{
+		record.value();
+	}
+}
+model.setData();//修改数据
+model.submitAll();//必须提交
+
+添加数据：先添加空记录，再加入空记录
+ QSqlRecord r = model->record();//添加空记录
+ model->insertRecord(-1,r);//最后一行插入空记录
+
+26.不能通过析构函数来处理多线程中分配的值，因为析构函数与其他线程函数不同线程
+	
+27.两种创建定时器的方法
+int id = startTimer(1000)-->killTimer(id);
+QTimer timer;  timer.start(1000)-->timer.stop()  每隔1000ms发送一次timeout信号
+
+28.connect(this,&Widget::destory,)//是释放不了子线程的内存的
+void ServerWidget::closeEvent(QCloseEvent *e)
+{
+    int button = QMessageBox::warning(this,"关闭窗口","是否关闭窗口",QMessageBox::Ok|QMessageBox::Cancel);
+    if(button == QMessageBox::Ok)
+    {
+        emit killAll();//处理这个信号再进行调用子线程的槽函数来释放
+        e->accept();
+    }
+    else
+    {
+        e->ignore();
+    }
+}
+	
+29.qt密码输入
+QLineEdit edit;
+edit.setEchoMode(QLineEdit::);//enum枚举
+
+30.qt输入提示
+QCompleter completer(QStringList<<"1123"<<"erer");
+completer.setFilterMode(Qt::)//设置匹配模式
+QLineEdit edit(this);
+edit.setCompleter(&completer);//这样文本输入时就会进行匹配,如输入1，就会在下方显示下拉框1123
+
+32.
+布局：QHBoxLayout(水平布局)，QVBoxlayout(垂直布局)，QGridLayout(网格布局)
+	使用:QHBoxLayout layout; layout.addWidget(&button)	再把布局加入父窗口进行布局  w.setLayout(&layout);
+
+添加弹簧:addstretch(1) //1是指权重，当加入布局的空间权重一样时，平分大小
+
+33.
+ QPushButton findButton(QString("&Find"));//表示findbutton可由快捷键alt+f(find的首字母)按下，设置快捷键的方法
+ 
+ 34.一个信号可以连接多个槽函数，但是会以不确定的顺序调用这些槽函数
+ 多个信号可以连接同一个槽函数
+ 一个信号可以连接另一个信号（qt4中）
+ 连接可以被移除，把 connect 换为 disconnect 便可，其余不变 
+ 总结：一个类：QObject      三个宏：Q_OBJECT，SLOT,SIGNAL      三个保留字：signals，slots，emit
+ 在槽函数中调用sender()可以获得信号调用者
+ 
+35.QMessageBox::warning(this,"注意","注入成功");//按钮无法居中，因为是根据不同的系统的行为画出来的，想要居中自己弄个类
+
+36.往tableView中添加模型与数据
+	QStandardItemModel *model = new QStandardItemModel(this);
+	tableView.addModel(model);
+	QStandardItem *item1= new QStandardItem(QString(name));
+	model->setItem(i,j,item1);//获取数据,i表示第几行的数据，j表示第几列的数据，item1为插入的数据
+ 
+37.
+获取model中某行的数据
+	QModelIndex index = model.index(row,i)//row行号，i第几列的数据
+	QString str = model.data(index).toString();
+	
+tableView选中多行，获取数据
+	QItemSelectionModel *selectModel = ui->tableView->selectionModel();//选中的模型，不要释放内存会出错，会自动释放的
+    QModelIndexList selectList = selectModel->selectedIndexes();//获取所有行数据
+	selectList.at(i).data().toInt();//得到数据，比如一行2个数据，获取选中的行的第一个数据，at(i+=2); i的每次变化为2便可
+ 
+38.信号与槽 与 多线程间 的注意事项
+2、方法二，通过按钮控件的接口设置其快捷触发的键盘的按键。
+在线程中传递参数使用自定义类型的参数时，必须注册才能使用
+在线程中传递参数不能以&传递（可以传址，传值），也会报未注册的错误
+多线程中全局变量可以共享
+多线程中定义的变量如果要在子线程中使用那必须定义为指针变量（因为变量在哪个线程定义就是那个线程的变量）
+
+38.	文件中所有字符的的编码格式都是gbk或者ASCII的，而qt中的字符集是utf-8编码的
+ 所以需要读取文件的时候需要编码格式的转换（<QTextCodec>类）
+
+39.创建无界面应用#include<QCoreApplication>类，无需在工程文件中包含Qt += gui core widgets等,与QApplication类似用法
+
+40.dialog对话框
+模态对话框的实现原理：模态对话框自带消息循环，把app的消息循环接管了，让别的窗口得不到消息
+int ret = dialog.exec();//返回一个int值，来区别对话框是accept还是reject关闭的，这两个也是槽函数，并且能把dialog关闭，返回值
+if(ret == QDialog::Accepted)
+eles if(ret == QDialog::Rejected)//判断返回
+文件选择对话框:#include <QFileDialog>             QFileDialog::getExistingDirectory()//目录选择
+颜色选择对话框:#include <QColoeDialog>  QColoeDialog color;   color.exec();  QColor c = color.selectedColor();//获取选中的颜色
+字体选择对话框:#include <QFontDialog>   QFontDialog font;     font.exec();   QFont f = font.selectedFont();//获取选中的字体 
+
+41.json数据结构
+ 
+ 
+ 一些重要的实现
+														不规则窗体的实现
+  //设置窗口大小
+    this->setFixedSize(QApplication::desktop()->width(),QApplication::desktop()->height());//窗口等于屏幕大小，setFixedSize为设置不可改变的窗口
+    //去窗口边框
+
+    setWindowFlags(Qt::FramelessWindowHint | windowFlags());//相当于在原来的标记上加上去边框的属性
+
+    //把窗口背景设置为透明，控件不透明（只有设置了上面的属性后才可以）
+    setAttribute(Qt::WA_TranslucentBackground,true);
+	
+	//通体透明
+    setWindowOpacity(0.3);
+	
+	//如果需要在窗口中手动绘图，必须加上一张半透明的背景图片
+
+													QWidget类窗口最大化设置
+	QWidget w;			 w.showMaximized();    			showFullScreen()//全屏幕显示
+	
+	
+													把画出来的内容保存在图片中
+	QPixmap pixmap(size());//图片，设置大小
+	QPainter painter(&pixmap);//设置设备
+	render(&painter);//渲染，把当前屏幕的绘图画到pixmap中
+	pixmap.save("./保存绘图.jpg");//保存图片到。。。
+	
+	
+													pixmap图片save是默认黑色背景那怎么办呢
+	fillRect(QRect(),Qt::white);//给他填充一个白色的矩形框
+
+
+														打印
+	1.先在project文件的QT中加入printsupport
+	2.包含头文件#include
+	#include <QPrintDialog>//打印
+	#include <QPrintPreviewDialog>//打印预览
+	
+	3.打印预览
+	QPrintPreviewDialog dialog;
+	connect(&dialog,&QPrintPreviewDialog::paintRequested,this,&MyWidget::slotPaintRequested)//预览框打开时调用，slotPaintRequested为自己实现的槽函数
+	dialog.exec();
+	//槽实现
+	void slotPaintRequested(QPrinter *printer)
+	{
+		QPainter painter(printer);//添加设备，可以直接添加打印的东西在设备上
+		//render如果是打印pixmap的话,pixmap必须指定大小,而且render是打印当前窗口的图像
+		render(&painter);//把当前render中的图像绘制到打印机中，（模型，视图，窗口）画出来的可能不一样
+		painter.drawText(QPoint(100,100),"牛逼");//直接往打印机中打印文字
+	}
+	
+	3.或者直接打印
+	QPrintDialog dialog;
+    connect(&dialog,SIGNAL(accepted(QPrinter*)),this,SLOT(slotPaintRequested(QPrinter*)));//打印的窗口确认打印时调用
+    dialog.exec();
+	slotPaintRequested的实现与上一样
+
+	
+														两种定时器
+	// 方法一 QTimer
+	QTimer *timer = new QTimer(this);
+	timer->start(1000);
+	connect(timer, SIGNAL(timeout()), this, SLOT(sltTimeout());
+	OR
+	connect(timer,&QTimer::timeout(),
+							[=]()
+							{
+								qDebug() << "Lambda表达式";
+							}
+	);
+	timer->stop();
+	//只进行一次计时
+	QTimer::singleShot(1000,this,SLOT(超时槽函数));
+	 
+	// 方法二 timeEvent
+	int m_nTimerId = startTimer(1000);
+	 
+	void MainWidget::timerEvent(QTimerEvent *event)
+	{
+		if (event->timerId() == m_nTimerId) {
+			dosomething();
+			killTimer(m_nTimerId);
+			....
+		}
+	}
+
+	
+													获取鼠标点击的位置
+	ev.pos();//得到相对于于窗口点击的位置
+	QCursor::pos();//得到相对于屏幕坐标的鼠标位置
+	
+	
+													鼠标右击菜单弹出
+	重写鼠标点击事件，构建好menu（windows的菜单如：文件），右键就会弹出，menu->exec();//前提是构建好了menu变量,相当于窗口
+
+	
+													mainWindow整个开发流程
+	QMenuBar *menubar = menuBar();//添加菜单栏
+   QMenu *menu = menubar->addMenu("&file");//添加一个菜单项
+   _menu = menu;
+   QAction *openAction = menu->addAction("&open",this,SLOT(slotOpen()),QKeySequence::Open);//为菜单项添加一个动作，参数:名字，响应对象，处理槽函数，快捷键（QKeySequence::Open或QKeySequence("ctrl+o")）
+   menu->addSeparator();//添加一个分界符
+
+   openAction->setToolTip("打开文件");//添加提示，不能在菜单栏显示
+
+   QToolBar *toolbar = addToolBar("toolbar");//添加工具栏
+   toolbar->addAction(openAction);//添加动作
+
+   QStatusBar *statubar = statusBar();//添加状态栏
+
+   QLabel *label = new QLabel("statusbar");
+   statubar->addWidget(label);//状态栏中添加文本label
+
+   QTextEdit *edit = new QTextEdit(this);
+    this->setCentralWidget(edit/*实现的窗口类*/);//设置中央区域，除去三个栏后剩余的widget
+
+   //QSystemTrayIcon类设置系统托盘显示
+    QSystemTrayIcon *icon = new QSystemTrayIcon(QIcon("../folder.ico"));//托盘图标,以build-开头的文件夹为根文件夹
+    icon->show();//托盘显示
+    icon->setToolTip("我是QSyetemTrayIcon");//设置提示
+    //connect(icon,&QSystemTrayIcon::activated,this,&MyMainWindow::slotActivated);//为左键点击添加动作，是activated的 信号
+	
+    menuquit = new QMenu;
+    QAction *quitAction = menuquit->addAction("退出");
+    connect(quitAction,&QAction::triggered,qApp,&QApplication::quit);//退出，因为已经设置了点击关闭按钮就隐藏窗口而不是关闭窗口
+    icon->setContextMenu(menuquit);//设置托盘右键点击菜单
+}
+void MyMainWindow::mousePressEvent(QMouseEvent *e)
+{//右键点击菜单显示
+    if(e->button() == Qt::RightButton)
+    {
+        //全局坐标 QCursor类
+        _menu->exec(QCursor::pos());//直接像模态对话框一样显示就可以右键出菜单
+    }
+}
+
+
+												除了close外的退出程序的方法
+	connect(quitAction,&QAction::triggered,qApp,&QApplication::quit);//QApplication 类的quit()静态槽函数 app.quit();
+	
+	
+												QByteArray和QString的区别
+	QByteArray是以单个字节来保存数据的，QString与编码有关，比如；QByteArray array("字节数组");  QString str("字节数组");   他们的size分别是12和4
+	跟用户交互时最好是用QByteArray（比如文件传输），程序中使用时用QString
+	
+	
+												使中文不乱码
+	QTextCodec *code = QTextCodec::codecForName("GBK");
+	QString str = code->toUnicode(char *或者QByteArray);这样显示就不会乱码了
+	
+	
+												文件映射/虚拟内存（好处：读取大文件的时候速度杠杠的）
+	内存地址只是一个抽象的东西，并不是直接指物理内存，所以可以采用虚拟内存的方式直接把文件当为内存一样来读取
+	uchar *textPtr = file.map(0,file.size());//直接映射到磁盘空间
+    QString text(code->toUnicode((char *)textPtr));
+    edit1->setText(text);
+
+    file.unmap(textPtr);//释放虚拟内存
+    file.close();
+	
+	
+												回车键发送数据
+	connect绑定returnPressed信号
+	
+	
+												QT导入动态库
+	工程文件中加上：LIBS += -L路径名 -l动态库名（都没有空格，QT mingw版本与linux无区别）
+
+												顶层显示/始终显示在最上层
+	setWindowFlags(Qt::WindowStaysOnTopHint)//widgets窗口对象的函数
+
+					 							mouseMoveEvent()的按键判断
+
+	返回产生事件的按钮状态，函数返回当前按下的所有按钮，按钮状态可以是Qt::LeftButton,Qt::RightButton,Qt::MidButton或运算组合 
+
+	假设鼠标左键已经按下，
+	如果移动鼠标，会发生的move事件，button返回Qt::NoButton，buttons返回LeftButton。
+	再按下了右键，会发生press事件，button返回RightButton，buttons返回LeftButton | RightButton
+	再移动鼠标，会发生move事件，button返回Qt::NoButton，buttons返回LeftButton | RightButton
+	再松开左键，会发生Release事件，button返回LeftButton，buttons返回RightButton
+	也就是说，button返回“哪个按钮发生了此事件”，buttons返回"发生事件时哪些按钮还处于按下状态"	
+				
+										设置焦点跟随鼠标						
+	 w.setFocusPolicy(Qt::ClickFocus);//设置焦点策略,鼠标跟随,w为QWidget类
+
+										获取桌面图像
+	qApp->screens().at(0)->grabWindow(qApp->desktop()->winId());//理论上是获取第一块屏幕,但是在linux下获取了全部的两块屏幕
+	qApp->primaryScreen()->grabWindow(0);//获取第一块屏幕的图像
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

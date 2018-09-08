@@ -1,0 +1,179 @@
+
+
+
+查看当前数据库的语言环境:
+	show variables like 'character%';
+
+
+1. 安装mysql5.7后修改密码
+	打开文件:sudo more /etc/mysql/debian.cnf
+	用文件里的用户名密码登陆Mysql
+	use mysql
+	update user set plugin='mysql_native_password' where user='root';
+	update user set authentication_string=password('123') where user='root';
+	flush privileges;
+	
+2.当你的客户端无法登录服务器
+	ps -u mysql
+	把mysql的后台进程杀死(他会自动重启),然后就可以登陆了
+	
+3.mysql命令
+数据库的操作:
+show databases:显示所有数据库
+drop database + 数据库名:删除某个数据库
+create database + 数据库名: 添加数据库
+create database 数据库名 character set utf8:指定字符集为utf8(默认为拉丁字符集,不支持中文)
+show create database+数据库名:显示创建的数据库的详细信息
+alter database mydb1 character set utf8:修改字符集为utf8
+use+数据库名:表示使用哪个数据库
+
+表的操作
+create table+表名:创建表(直接复制操作不能有 空格符)
+show tables: 显示当前数据库所有的表
+show create table+表名:显示创建的表的信息
+alter table + 表名+add column + 列名+类型(如:int):为数据表增加一个数据段(列)
+
+//查找
+select id,name as "名字", salary*12 年薪    //别名
+from employee
+where id>=2;
+//插入
+insert into 表() +values()
+//更新
+update + 表名 + set + 改变的列 + 条件
+如:update student set classid = 2 
+where id between 6 and 10    //修改id在6到10之间的classid的值为2
+//分组
+group by
+如:select classid,avg(english)
+from student
+group by classid;
+mysql中的分组检查不严格(oracle中group中没有的字段,select中也不能有,分组操作函数除外)
+
+4.时间操作函数
+select now() from dual:获取系统当前时间(dual是虚表)
+
+select now(),year(now())年, month(now()) 月,day(now()) 日 from dual;
++---------------------+------+------+------+
+| now()               | 年   | 月   | 日   |
++---------------------+------+------+------+
+| 2018-08-27 11:38:27 | 2018 |    8 |   27 |
++---------------------+------+------+------+
+
+current_date():当前日期
+current_time():当前时间
+current_timestamp():时间戳
+mysql> select current_date() 日期, current_time() 时间, current_timestamp() 时间戳 from dual;
++------------+----------+---------------------+
+| 日期       | 时间     | 时间戳              |
++------------+----------+---------------------+
+| 2018-08-27 | 11:42:52 | 2018-08-27 11:42:52 |
++------------+----------+---------------------+
+
+昨天,今天,明天
+date_add(now(), INTERVAL -1 day):昨天(day可以换成year或month,表示去年或上一个月)
+date_add(now(), INTERVAL +1 day):明天
+mysql> select date_add(now(), INTERVAL -1 day)昨天, now(), date_add(now(), INTERVAL +1 day) 明天 from dual;
++---------------------+---------------------+---------------------+
+| 昨天                | now()               | 明天                |
++---------------------+---------------------+---------------------+
+| 2018-08-26 11:48:20 | 2018-08-27 11:48:20 | 2018-08-28 11:48:20 |
++---------------------+---------------------+---------------------+
+
+字符串与日期相互转化
+date_format(日期,'%Y-%m-%d')   //日期转字符串
+str_to_date(string,'%Y-%m-%d %h-%i-%s') //字符串转日期(年日月,时分秒)
+mysql> select date_format('2013-09-09', '%y-%m-%d') 日期 from dual;
++----------+
+| 日期     |
++----------+
+| 13-09-09 |
++----------+
+
+日期转换为字符串
+
+
+5.字符串
+concat(string,[...]):字符串连接函数
+mysql> select concat('hello',' world',' new', ' year') from dual;
++------------------------------------------+
+| concat('hello',' world',' new', ' year') |
++------------------------------------------+
+| hello world new year                     |
++------------------------------------------+
+ucase(string): 转换为大写
+lcase(string): 转换为小写
+
+6.定义表的约束
+*定义主键约束　primary key:不允许为空，不允许重复
+	*定义主键自动增长　auto_increment
+	*定义唯一约束　unique
+	*定义非空约束　not null
+	*定义外键约束　constraint ordersid_FK foreign key(ordersid) references orders(id)
+	*删除主键：alter table tablename drop primary key ;
+
+	create table myclass
+	(
+		id INT(11) primary key auto_increment,
+		name varchar(20) unique
+	);
+	
+	create table student(
+		id INT(11) primary key auto_increment, 
+		name varchar(20) unique,
+		passwd varchar(15) not null,
+		classid INT(11),  #注意这个地方不要少逗号
+		constraint stu_classid_FK  foreign key(classid) references myclass(id)
+	);
+	
+7.连接
+等号连接(内链接,sql99标准):
+mysql> select e.deptno, e.ename, e.sal, d.dname
+    -> from emp e inner join dept d
+    -> on e.deptno = d.deptno;
+
+左外连接:(使不符合条件的数据的也显示出来)
+---select这里出现的group by中一定要包含
+select d.deptno,d.dname, count(e.deptno)		
+from dept d left outer join emp e
+on d.deptno = e.deptno
+group by d.deptno,d.dname;
+
+自连接(自己与自己连接)
+select concat(e.ename, '的老板是', ifnull(b.ename, '他自己')) 老板
+from emp e left outer join emp b
+on e.mgr = b.empno;
+
+滤空修正
+ifnull(b.enmae, '他自己')    //如果b.ename不为空显示b.ename, 如果为空显示'他自己'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

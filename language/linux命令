@@ -1,0 +1,570 @@
+					linux就是一个文件系统（不管什么是什么都抽象成一个文件）
+关于内存的描述
+linux每一个运行的程序(进程)操作成系统都会为其分配一个0~4G的地址空间(虚拟地址空间)
+32位的处理机下的内存分布
+地址由大而小的分布依次是:内核空间(1G),环境变量,命令行参数,栈空间,共享库,堆空间,未初始化全局变量空间,
+		        已初始化全局变量空间,代码段空间(二进制机器指令),受保护地址(0~4k)
+查看系统中存在的所有内核:dpkg --get-selections | grep linux
+查看当前系统内核:uname -a
+清理内核命令:sudo purge-old-kernels
+
+
+
+1.命令解析器（根據輸入的命令來解析執行操作）
+shell -- unix操作系統
+bash  --linux操作系統（ba shell）
+
+2.操作快捷键
+ctrl+p ：自现在的位置向上访问history（可以使用方向键）
+ctrl+n： 自现在的位置向下访问history（可以使用方向键）
+ctrl+f：光标向后移动一个单位
+ctrl+b：光标向前移动一个单位
+Ctrl+a（ahead）：光标移动到当前行的行首
+Ctrl+e（end）：光标移动到当前行的行尾
+Ctrl+h：删除光标前面的一个字符
+ctrl+d：删除光标后边的一个字符
+ctrl+u：删除光标前边的所有字符
+tab：自动补全命令,目录补全（如果有多个输入相同的前缀，那就需要按两遍）
+
+//终端的操作
+ctrl+c: 结束正在运行的程序【ping、telnet等】
+ctrl+d: 结束输入或退出shell
+ctrl+s: 暂停屏幕输出
+ctrl+q: 恢复屏幕输出
+ctrl+l: 清屏，等同于Clear
+
+3.命令
+cd:  cd /bin 指跳转到bin系统文件夹（？任何时候都可以调到）  cd yonghu/ （用户文件夹跳转）
+history：显示输入过的命令
+date：显示当前日期
+ls /:显示所有根目录
+ls（+文件夹/文件）:显示当前目录下的所有东西，ls -a（显示所有文件），ls -l(显示文件详细信息)，ls -la(显示所有文件的详细信息)
+pwd:显示当前目录
+sudo su：当前用户切换为超级用户（需要输入密码），exit退出
+tree（+文件夹）:查看当前目录下的所有文件及文件夹（一般情况下显示为白色指的是普通文件，蓝色指的是文件夹，红色压缩文件，
+     	       绿色可执行文件，青色链接文件即快捷方式，黄色指的是设备文件）
+mkdir(make dir)：创建目录，mkdir makedir（创建单个目录），mkdir doc1/doc2/doc3 -p（创建复合目录）
+rmdir(remove dir):删除一个空目录（必须为空）
+rm(remove):删除目录/文件（rm doc1 -r   -r指的是递归删除，-ri会有提示）
+touch:创建一个空文件(文件不存在，创建文件，文件存在，修改文件时间)
+cat：查看文件内容
+cp:复制文件（cp 源文件名 目标文件名，如果目标文件名存在就覆盖文件内容），
+   复制文件夹（需要加上 -r 指的是递归复制），若目标文件夹名存在即复制到源文件夹下
+   复制文件夹中的文件到另一文件夹中（如：cp sort/* mytest/）
+more:查看文件（滚动式查看，支持显示更多的内容，不支持回看）
+less:查看文件（滚动式查看，支持显示更多的内容，支持快捷键回看，q退出）
+head:查看文件（head -5 文件名 表示查看前5行内容）
+tail:查看文件（tail -5 文件名 表示查看末5行内容）
+mv:更改名字或者移动文件（mv 文件名/文件夹名 文件或者文件夹名，若为已经存在的文件夹便为移动文件，否则更改名字）
+ln(link):为文件或目录创建一个软链接（即快捷方式，ln -s(soft) hello hello.c  hello指的是需要创建快捷范方式的文件或文件夹，hello.c为快捷方式的名字，
+   使用绝对路径才可以在整个linux系统中均能使用如：~/unix/hello hello.c  通过文件目录进行查找，不可为目录创建硬链接）
+du:查看当前文件夹的文件夹大小（du -h(加上单位)）
+df:磁盘使用情况（df -h（加上单位））
+which:查看使用的命令所在的磁盘(which ls)
+whoami:当前用户
+chmod(change mode):改变用户文件/文件夹的使用权限（目录必须有执行权限，不然文件夹打不开）
+	文字设定法：chmod [who] [+ 或 - 或 =] [mode]（如：chmod o+x 名字）
+	who:文件所有者（u），同组用户（g），其他人（o），所有人（a或者不写）
+	+:添加权限   -:删除权限	=:覆盖原来所有权限（a=r+w）
+	mode:权限
+	数字设定法：chmod 755 temp（设定全部权限）  chmod -001 temp(减少其他人的x权限) 
+	r(4), w(2),x(1)
+	7表示4+2+1 5表示4+0+1(即拥有r和x权限)
+sudo:借用管理员权限（在提示不允许操作时可以在前边加上sudo）
+chown（change owner）：改变文件所有者/用户组（chown adg234(新的文件所有者):adg234(新的用户组) temp(文件)，可以只改变文件所有者）
+chgrp（change group）：改变所属用户组
+find：查找文件，如：
+	文件名查找：find+查找目录+ -name+查找的文件名 (*是通配符)
+	文件大小来查找：find+查找目录+ -size +文件大小（如+10M，+号代表大于，-号代表小于，可以有多个-size即查询大小在什么之间的文件）
+	文件类型查找：find+查找目录+ -type + 文件类型
+grep：按文件内容查找
+	grep + -r + "查找内容" + 查找目录
+man man:查看帮助文档(比如查找第二章open函数:man 2 open)
+echo + 字符串:显示指定字符串(可以输出环境变量,echo $PATH)
+sudo poweroff:关机
+sudo reboot:重启
+sudo shutdown:关机,可以设置参数来实现定时关机等
+file+文件名:得到文件的描述信息和格式
+stat+文件名/文件:获取文件的属性信息
+ulimit -a:查看当前系统的资源限制(比如:栈大小)
+>:重定向(如:ps aux > fileName,把输出的信息传入到文件中)
+>>:重定向,追加,如果文件不存在就创建新文件
+strace + 可执行程序:获取可执行程序所有的系统调用函数(如:strace ./test)
+time + 可执行程序:获得程序执行的时长 (实际执行时间 = 系统时间+等待时间+用户时间)
+netstat -apn:获取网络和端口使用的信息
+ldd + 可执行程序名:获取指定可执行文件的共享库列表(或者动态库列表)
+ip ad:查看当前所有网卡信息
+sudo ifconfig + 网卡名称 + up/down:打开网卡或者关闭某个网卡
+alias 名字='命令'//给命令设置别名,相当于直接替换(直接alias为查看所有别名)
+echo $?:表示上一个进程退出的值
+wc + filename:统计文件的行数
+
+4.linux下各个文件夹的意义
+/bin（binary）:存放各种常用命令
+/boot：存放启动linux的各种核心文件
+/dev:device的缩写，该目录下存放的是linux的外部设备（linux下一切皆文件，把这些硬件设备抽象成一个文件，存放到该目录下）
+/etc:存放所有系统管理所需要的配置文件和子目录（修改配置文件）
+/home:存放所有用户的主目录（每一个用户都有自己的主目录）
+/lib:存放系统最基本的动态库（dll文件，linux下也描述为共享库）
+/lost+found:存放文件碎片，一般情况下是空的，当系统非法（系统异常）关机时，这里就存放了一些文件（开不了机后，可以通过它来恢复文件）
+/media:系统自动识别一些设备（U盘，光驱等），，当时别后会自动挂载到该文件夹下
+/mnt:手动挂载设备就存放在该文件夹下（临时挂载）
+/root:超级用户的目录
+/sbin:存放管理员使用的系统管理程序
+/usr(用户软件资源目录):用户的很多应用程序和文件都存放到该目录下啊（系统默认安装应用程序到该目录）
+
+5.用户目录
+绝对路径：从根目录开始写
+相对路径：相对于当前路径而言
+	. 	当前目录
+	.. 	当前的上一级目录
+	-	在临近的两个目录之间切换（cd -） 
+adg234@ubuntu:~$ 	
+		adg234：当前登录的用户
+		 @    ：在
+		Ubuntu：主机名	
+		~     ：用户的家目录（宿主目录,切换cd ~），home下的当前用户目录就是家目录
+		$     ：指的是普通用户（#指超级用户），切换为超级用户(输入命令sudo su)
+
+6.终端中显示的信息
+文件显示（tree，ls）：一般情况下显示为白色指的是普通文件，蓝色指的是文件夹，红色压缩文件，
+	绿色可执行文件，青色链接文件即快捷方式，黄色指的是设备文件
+	文件中占用储存空间的有:普通文件,目录,软连接
+	其余的为伪文件(不占用磁盘空间)
+ls -l显示显示详细信息（如drwxr-xr-x  2 adg234 adg234 4096 4月  29 20:35 unix）：
+	开头10个字符：第一个指的是文件类型（-代表普通文件，d代表文件夹等，l表示软链接符号）
+	后面每三个为一组：r（代表read），w（wirte），x（执行），文件文件所有者（第一组的权限），同组用户（2），其他人（3）
+	2：代表硬连接数
+	adg234：文件所有者
+	adg234：文件所属组
+	4096：指占用的磁盘空间（目录所占用为4096，文件为文件大小）
+
+7.软件（*.deb）安装和卸载
+在线安装： 安装：sudo apt-get install tree(这个是软件名)
+	  卸载：sudo apt-get remove tree
+	  更新软件列表：sudo apt-get update
+	  清理软件安装包(下载在固定目录):sudo apt-get clean
+
+deb包安装：安装：sudo dpkg -i(理解为install) 安装包名字
+	  卸载：sudo dpkg -r（remove） 软件名
+
+源码安装：看ReadMe文件安装便可
+
+linux第二天：
+8.挂载设备
+自动挂载：自动挂载在/media目录下，当前用户的文件夹下有设备名，卸载设备,如： sudo umount /media/adg234/设备名
+手动挂载：手动挂载在/mnt 目录下，必须有设备名才能进行挂载，通过sudo fdisk -l可以才看设备路径，sudo mount+设备路径，卸载sudo umount /mnt（挂载目录）
+	如果外设手动挂载在非mnt目录下时，会把该目录的东西覆盖（并非删除了，卸载外设后就回来了）
+
+9.压缩包管理
+gzip,bzip2:只能压缩文件，不能压缩目录，不会合并为一个包压缩，不会保留原文件（bzip2可以，加上-k参数来保留）sudo bzip2 -k *.txt
+	   sudo bunzip2 *.后缀（解压）
+tar：
+	参数：
+	    c -- 创建 -- 压缩
+	    x -- 释放 -- 解压缩
+	    v -- 显示提示信息 -- 压缩解压缩 -- 可以省略
+	    f -- 指定压缩文件的名字
+
+	    z -- 使用gzip的方式来压缩
+	    j -- 使用bzip2的方式来压缩
+	压缩：
+	    tar zcvf 生成压缩包的名字(xxx.tar.gz) 要压缩的文件或目录
+	    tar jcvf 生成压缩包的名字(xxx.tar.bz2) 要压缩的文件或目录
+	解压缩：
+	    tar jxvf 压缩包的名字 -C 解压目录(默认为当前路径)
+rar:
+	参数：
+	    压缩：a
+	    解压缩：x
+	压缩：
+	    rar a 生成的压缩文件的名字（自动加上后缀） 压缩的文件或目录
+	解压缩：
+	    rar x 解压缩文件的名字
+zip：
+	参数：
+	    -r表示递归操作
+	压缩：
+	    zip 压缩包的名字 压缩的文件或目录（压缩目录需要加上-r）
+	解压缩
+	    unzip 需要解压的压缩包名字 -d 解压目录(-d表示解压到哪个文件目录下)
+
+总结：相同之处
+	    tar/rar/zip  参数  生成的压缩文件的名字  压缩的文件或目录
+	    tar/rar/zip  参数  压缩包的名字  参数(rar没有参数)  解压到的目录
+
+10.进程管理
+查看当前在线用户状况的命令(who)
+linux下有7个设备终端(前6个是文字终端,第七个是图形终端),利用crlt+alt+F1~F7来切换(别乱按,他们之间互不影响,故他会关机)
+
+ps a（查看当前系统中的所有用户）
+ps au（显示当前用户的具体信息）
+ps ajx(显示运行的程序,有列出组id)
+ps aux（查看没有终端的应用程序，tty为？的） | grep bash (管道技术，不显示ps aux中的得到的数据，直接作为grep的搜索bash找到的结果再显示)
+R代表正在运行,S代表后台运行,Z代表僵尸进程
+终端的作用是过跟用户进行交互
+kill -l(查看kill的信号)
+kill -SIGKILL(或-9) 进程id
+
+显示当前的环境变量
+env：可以利用管道技术来输出特定的环境变量，如：env | grep Path(表示在env得到的结果中搜索有Path的来输出)
+linux下的环境变量的格式：key -- value（键值对）key = value:value:value:value:...(如:PATH = /home/QT/bin:/dev/ma)
+
+查看linux下的任务管理器
+top（只能看，不能动）
+
+11.网络
+ifconfig：查看当前ip
+nslookup + 域名：解析域名 
+shift
+12.用户管理
+sudo adduser+用户名：添加用户（会默认添加进用户名一样的组，用户名不能有大写）
+sudo deluser+用户名：删除用户（不会删除/home目录下的用户文件夹，需要手动删除）
+
+sudo useradd -s /bin/bash(可以使用bash命令) -g + 添加进的组名(如：Robin，该组名不会默认创建)  -d 用户目录(如：/home/Robin) -m 若不存在该目录就创建（如：Robin） 不会有添加密码的选项，得手动添加
+sudo groupadd:创建组
+sudo passwd+用户名：为用户添加密码
+su+用户名：切换到用户
+exit：退出当前用户
+
+13.
+搭建ftp服务器（vsftpd，得先安装软件）
+   作用：接收和发送文件
+	服务器：
+		修改配置文件：修改/etc/vsftpd.conf文件
+		重启服务：sudo /etc/init.d/vsftpd restart(sudo service vsftpd restart)
+	客户端： 
+	实名用户登录
+		登录客户端 ftp + IP地址(然后可以用bash命令来)
+		文件上传:put + 文件名(登录时所在的目录的文件)
+		文件下载:get + 文件名(服务器端所在目录的文件)
+	匿名用户登录
+		ftp + serverIP
+		用户名:anonymous
+		密码:直接回车
+
+		不允许匿名用户在随意目录进行切换
+		在配置文件中加上:anon_root=目录//指定匿名用户所能访问的根目录
+	lftp工具:相当于ftp的扩展功能更强大,不过登录的也是ftp服务器(mirror命令用于上传和下载)
+
+nfs服务器的搭建(nfs相当于windows下的共享文件夹,局域网)
+	服务器:
+		创建共享目录:mkdir dir
+		修改配置文件:/etc/exports 添加/home/ma/nfsShare *(rw,sync)(前面部分为共享文件夹的目录,*号代表iP当前ip网段,rw代表读写ro,
+			    wo代表只读或者只写,sync代表实时更新数据)
+		重启服务:sudo service nfs-kernel-server restart
+
+	客户端
+		挂载服务器共享目录:mount serverIP:sharedir /mnt(指的是把服务器的共享目录挂载到mnt文件夹)
+
+ssh服务器搭建(用于远程登录服务器)
+	服务器端:
+		安装ssh服务器(openssh-server)
+	客户端:
+		实名登录:ssh ma@10.15.128.156(ssh+用户名+@+IP),登陆后跟他自己的电脑一样操作
+		退出登录:logout
+
+scp命令(远程服务器的数据拷贝,也是必须先安装了openssh-server)
+	使用:scp -r ma@10.15.128.156:/home/ma/Qt /home/(scp + -r + 用户名 + @ + IP + 拷贝的目录 + 拷贝到的本机的目录)
+
+14.vi/vim(不能通过鼠标来操作)
+命令模式切换到末行模式: 直接输入 :
+命令模式切换到编辑模式: rios(每一个都是一种命令,分大小写)
+
+命令模式下的操作:
+	光标的移动:
+		H(左) J(下) K(上) L(右)
+		行首:0
+		行尾:$(shift+4)
+		文件开始的位置:g
+		文件结束位置:G
+		定位位置:数字+G
+	删除操作:
+		删除光标后边的字符:x
+		........前.......:X
+		........单词.....:dw(必须移动到单词开始的位置)
+		删除光标到行首的字符:d0
+		..........行尾.....:D(或者d$)
+		删除光标当前行:dd
+		删除多行:数字+dd
+	撤销操作:
+		撤销:u
+		反撤销:ctrl + r
+	复制粘贴:
+		删除命令就是剪切
+		复制:y
+		复制一行:yy
+		复制多行:数字+yy
+		粘贴:p(粘贴到当前行的下一行)
+		粘贴:P(大写的,粘贴到当前行)
+	可视模式:
+		切换到可视模式:v
+		复制:y
+		删除:d
+	查找模式:
+		/+名(或者?+名)
+		#:把光标先移动到查找的单词身上,按#
+		遍历查找的单词:N/n
+	缩进:
+		>>:向右
+		<<:向左
+	字符替换:r
+	查看man文档:shift+k
+		
+末行模式下操作:
+	查找和替换:s/tom/jack/g(替换当前行的tom为jack)
+		  %s/tom/jack/g(替换所有的tom)
+		  20,25s/tom/jack/g(替换20到25行的tom)
+	保存和退出
+		q:退出
+		q!:退出不保存
+		w:保存
+		wq:保存退出
+		x:==wq(保存并退出)
+	在命令模式下保存退出:ZZ(大写)
+分屏操作(在末行模式下)
+	利用ctrl+w+w来进行文件之间的切换
+	退出,保存单个文件与之前一样,全部的话需要后面加上一个all(如:qall)
+	sp:水平分屏
+	vsp:垂直分屏(打开当前打开的文件)
+	vsp + 文件名:打开一个新文件
+打造vi:
+	
+
+15.gcc命令
+	gcc -s a.cpp -o app(直接输出可执行文件)
+	./app(执行可执行文件)
+	-E生成预处理文件
+	-c只编译子程序(.o文件用于做动态库)
+	如果缺少头文件可以加上: -I+头文件目录
+	如果缺少宏定义可以加上: -D+宏定义名称
+	要执行对程序的优化:-O0~3(不优化到优化3级,如:-O3)
+	添加提示信息:-Wall(会提示代码的注意,如定义变量未使用,大写W)
+	输出调试信息:-g(gdb调试必须添加此参数)
+
+16.静态库制作
+	命名规则:lib+库的名字+.a(如:libmytest.a)
+	制作步骤:生成对应的.o文件 -c
+		将生成的.o文件打包     ar(打包工具) rcs + 静态库的名字(如:libmytest.a) + 生成的所有.o(如:*.o)
+	发布和使用静态库
+		发布静态库,头文件(放到需要使用的目录)
+		使用静态库:1)gcc main.cpp ../lib/libMyCalc.a -I ../include -o sum(gcc+源代码文件+静态库的位置+-I+静态库头文件的目录+-o + 输出文件)
+			  2)gcc main.cpp -I ../include -L ../lib -l MyCalc -o app(相当于把上一种方法的静态库的文件和目录分开)
+			   (gcc+源文件+-I+静态库头文件的目录+-L+静态库目录+-l+静态库(去掉lib和.a)+-o+输出可执行文件名)
+		
+	通过nm命令可以查看可执行文件或者静态库文件
+
+静态库的优缺点
+	优点:发布程序的时候不需要提供对应的库
+	     加载库的速度快
+	缺点:库被打包到应用程序中,导致库的体积很大
+	     如果库发生了变化,需要重新编译
+
+16.动态库(共享库)制作
+	命名规则:lib + 名字 + .so
+	制作步骤:生成与位置无关的代码(与位置无关的.o) gcc ma.cpp -fPIC -I ../include -c
+		将.o打包成共享库       gcc -shared -o libMyCalc.so ma.o -I ../include
+	保证动态库的正确加载:
+		1)把动态库直接放到/lib/目录下,程序运行时会自动加载(这种方式不好,与系统的动态库混在一起)
+		2)export(表示导入系统环境变量中) LD_LIBRARY_PATH=../lib(这个相对路径是当前可执行文件的lib路径,临时导入,终端关了就失效)
+		3)永久配置:在家目录下输入vi .bashrc打开配置文件,在文末加上需要导入的动态库的路径export LD_LIBRARY_PATH=/home/ma/gcc/lib,重启终端
+		4)在etc目录下利用管理员权限打开ld.so.conf文件进行配置,在其中加入需要的动态库所在的目录:
+		  sudo vi ld.so.conf                  /home/ma/gcc/lib
+		  更新配置文件:sudo ldconfig -v
+	动态库优缺点:
+		优点:执行程序体积小
+		     动态库更新了,不需要重新编译(前提是接口没有改变)
+		缺点:发布程序的时候,需要将动态库提供给用户
+		     动态库没有被打包到应用程序中,加载速度相对较慢
+
+17.gdb调试(必须得你编译时得到了调试文件,-g)
+	启动调试器gdb:gdb app(这个是可调试的可执行文件的名字)
+	查看代码:
+		l(list)+行数:显示第几行开始的10行代码(l + 文件名:+行数 ,显示文件的第几行开始的10行),需要接着显示,直接按enter键
+	设置/删除断点:
+		b(或break)+(函数名:+)数字:在第几行设置断点
+		b+行号+if+条件语句:设置条件断点(比如:b 10 if i==10,表示的是当i==10时停下)
+		i(info)+b:获取所有断点编号
+		d(或delete)+数字:以断点编号来删除断点
+	开始调试:
+		如果gdb调试时有父子进程,那么可以通过一下指令来指定查看父或子进程的调试信息(默认为父进程)
+			set follow-fork-mode child(跟踪子进程,必须在他的fork调用之前设置)       set follow-fork-mode child(跟踪父进程)
+		start:只执行一步
+		或run:直接停在断点处
+		n(next):单步调试(不进入函数体内部)
+		s(step):单步调试(可以进入到函数体内部)
+		finish:从函数体内部跳出(如果在循环处设置了断点就跳不出来,要先删除循环断点)
+		c(continue):直接停在短点的位置
+		p(print)+变量名:查看变量的值
+		ptype+变量名:查看变量的类型
+		set var 变量名=赋值:设置变量的值
+		display+变量名:设置跟踪变量,在整个调试中出现
+		info+display:获取跟踪的变量的编号
+		undisplay+编号:取消跟踪变量
+
+18.makefile
+	makefile文件的命名:Makefile或makefile(只能这两种命名)
+	添加规则:
+		如:
+			.PHONY:clean(声明伪目标,不然会提示文件是最新的)
+			clean:(可以没有依赖项)
+			rm *.o -f(只要是终端命令就可以,-f是强制执行,不然会提示不存在)
+			在命令前面加上 - 横杠如果本条命令执行失败后仍然向下执行,否则出错后停止执行
+	执行makefile文件中的某条规则,如clean:
+		make clean(直接make是执行第一条规则)
+	makefile的规则:
+		规则中的三要素:目标,依赖,命令
+			1)源文件全部被编译
+				app:main.cpp ma.cpp
+					gcc main.cpp ma.cpp -o app
+				解释:app(目标:生成的可执行文件):main.cpp(如果与makefile文件不在同级目录下,必须显式指定该目录) ma.cpp(所有依赖文件,
+				     原材料)
+					(必须有tab缩进)gcc main.cpp ma.cpp -o app(命令)
+				在该makefile目录下终端中执行make命令
+			2)只编译发生改变的源文件(分开编译):
+				app:main.o ma.o			//开头的为终极目标,如果他生成了就不往下执行,若依赖项不存在,则往下执行
+					gcc main.o ma.o -o app
+
+				main.o:main.cpp			//子过程,准备工作
+					gcc -c main.cpp
+
+				ma.o:ma.cpp			//子过程
+					gcc -c ma.cpp
+			它如何知道那个文件发生了改变了呢?
+			比较依赖和目标的时间,如果依赖生成的时间比目标晚,那就说明发生了更新,所以得重新执行一遍该条命令,否则不执行,每条都是这样比较,那就
+			不必都再执行一次编译,大大节省了时间
+	makefile变量:
+		如果有多个规则都使用同一种模式可以通过公式来表示:
+			main.o:main.cpp			//子过程,准备工作
+					gcc -c main.cpp
+
+				ma.o:ma.cpp			//子过程
+					gcc -c ma.cpp
+			公式表示为:  %.o:%.cpp(在终极目标构建时,会逐一查找需要的依赖项,而遇到公式后,把依赖项的名字进行填入,则变为:main.o:main.cpp)
+		自定义变量:
+			obj=main.o ma.o//定义变量
+			target=app
+			$(target):$(obj)//变量替换,引用$(obj)
+				gcc $(obj) -o $(target)
+		自动变量:
+			$<:规则中的第一个依赖
+			$@:规则中的目标
+			$^:规则中的所有依赖
+			表示为:gcc $^ -o $@(gcc main.o ma.o -o app)
+		自动变量只能在命令规则中使用(即每个规则项的第二行)
+		makefile自己维护的变量(都是大写的):如CC,CPPFLAGS(使用与自定义变量一致)
+		最终表示:
+			obj=main.o ma.o
+			target=app
+			$(target):$(obj)
+				gcc $^ -o $@
+			
+			%.o:%.cpp
+				gcc -c $< -o $@
+	makefile函数(必有返回值):
+		wildcard + 查找何种类型的文件:返回字符串(如:src = $(wildcard ./*.c),查找.c类型的文件,返回src = main.c ma.c类似的字符串)
+		patsubst + 何种类型 + 替换类型 + 来源字符串:返回值字符串(如:obj = $(patsubst ./%.c, ./%.o, $(src)),返回obj = main.o ma.o)
+
+19.环境变量(与命令行参数放在同一位置,用户区顶端)
+	常见的环境变量:PATH(可执行文件的搜索路径,依次从前往后搜索),SHELL(当前命令解析器),HOME(当前的家目录),LANG(当前语言),TERM(当前终端类型)
+	格式: key=value0:value1:value2......(如:PATH=/bin/:/usr/bin......)
+	引入环境变量表:extern char **environ;(在程序编写中使用,进行输出的便是该程序使用到的环境变量,为字符串,以NULL结尾)
+	
+20.git管理软件
+	安装软件后输入
+	git config --global user.name "Your Name" //用户名
+	git config --global user.email "email@example.com" //邮箱地址
+	
+	git init	//通过这个命令可以把一个目录变成可以管理的仓库
+
+	git本地操作
+		git add + [filename][f2][f3] //往版本管理库加入新文件(可以是多个文件),修改后也要进行这步
+		git commit + -m + 说明信息 //提交到仓库
+		git status//查看当前仓库状态
+		git diff//查看所做的修改
+		git log//查看历史提交记录
+		git reset --hard HEAD^//HEAD表示当前文件链表指针指向哪里,^表示回退一个版本,^^表示回退到前2个版本(或表示为 HEAD~2),依次类推
+		git reset --hard + 版本号前几位(如:d37849f)//恢复到未来的版本,只要有版本号就可以恢复
+		git reset HEAD + 文件名 //把暂存区的的修改撤销掉(即未进行提交的add操作)
+		git reflog // 记录每一次git命令(可以在这里找找到版本号)
+		git checkout -- +文件名 //让这个文件回到最近一次git commit或git add时的状态
+		git rm + 文件名 //删除文件(需要提交),并从版本库删除
+	
+	git远程操作
+	         准备工作:
+		1.先在本地创建ssh秘钥(如:ssh-keygen -t rsa -C "youremail@example.com",会在家目录产生一个.ssh的目录)
+		2：登陆GitHub，打开“Account settings”，“SSH Keys”页面,填上任意title,在Key文本框中粘贴id_rsa.pub的内容(.ssh文件夹中,别用vi打开复制)
+		3.创建远程仓库(new repository),比如: 创建目录-->gitSkill  IP为:github.com   那你的远程目录就为 maHHei/gitSkill.git  
+
+		git remote add origin git@github.com:maHHei/gitShared.git  // 关联远程库(得先在服务器那边创建)
+		git push origin + 分支名 //提交最新修改到远程库
+	        git clone git@github.com:maHHei/gitSkill.git  //从远程服务器进行克隆(github.com(远程服务器名):maHHei/gitSkill.git(远程服务器文件))
+	        
+	 分支(HEAD指向当前分支,利用分支可以很容易的创建一个存储点,利于回退(只需切换分支就可完成))
+	 	git checkout -b <name> //创建和切换为分支
+	 	 ==  git branch <name>  //创建分支
+	 	     git cheakout <name> //切换到分支
+		git branch  //查看分支
+		git merge <name> //合并某分支到当前分支(即当前分支指针指向被合并的<name>分支,需要先切换到指定分支再进行),默认fast forward模式
+		git merge --no-ff <name> //用普通模式合并，合并后的历史有分支，能看出来曾经做过合并，而fast forward合并就看不出来曾经做过合并 
+		git branch -d <name> //删除某条分支
+		当Git无法自动合并分支时，就必须首先解决冲突。解决冲突后，再提交，合并完成。
+		解决冲突就是把Git合并失败的文件手动编辑为我们希望的内容，再提交。
+		用git log --graph命令可以看到分支合并图。
+		git stash  //保存工作现场
+		git stash list //获取工作现场列表
+		git stash pop //还原工作现场,并删除该工作现场list中的条目
+		git stash apply stash@{0} //指定恢复的现场
+	多人合作
+		1.查看远程库信息，使用git remote -v；
+		2.在本地建立分支git branch branch-name
+		3.从本地推送分支到远程，使用git push origin branch-name，如果推送失败，先用git pull抓取远程的新提交；
+			提示出错信息：fatal: remote origin already exists.
+			解决办法如下：
+			1、先输入$ git remote rm origin
+			2、再输入$ git remote add origin git@github.com:maHHei/gitShared.git 就不会报错了！
+		4.在本地创建和远程分支对应的分支，使用git checkout -b branch-name origin/branch-name，本地和远程分支的名称最好一致；
+		5.建立本地分支和远程分支的关联，使用git branch --set-upstream branch-name origin/branch-name；
+		6.从远程抓取分支，使用git pull，如果有冲突，要先处理冲突
+		7.删除远程分支:git push origin --delete <BranchName>
+
+	
+				 
+
+
+	 
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
