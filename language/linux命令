@@ -268,6 +268,10 @@ scp命令(远程服务器的数据拷贝,也是必须先安装了openssh-server)
 	使用:scp -r ma@10.15.128.156:/home/ma/Qt /home/(scp + -r + 用户名 + @ + IP + 拷贝的目录 + 拷贝到的本机的目录)
 
 14.vi/vim(不能通过鼠标来操作)
+使vi支持中文显示,  .vimrc文件中加上
+	set encoding=utf-8
+	set termencoding=utf-8
+	set fileencodings=utf-8,gbk,latin1
 命令模式切换到末行模式: 直接输入 :
 命令模式切换到编辑模式: rios(每一个都是一种命令,分大小写)
 
