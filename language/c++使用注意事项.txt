@@ -1,6 +1,6 @@
 																	¡¶´óÒªÇó£º±ð·µ»ØÒ»¸öÔÚº¯ÊýÖÐ´´½¨µÄ±äÁ¿µÄµØÖ·¡·																		c/c++³ÌÐò±ä³É¿ÉÖ´ÐÐ³ÌÐòµÄ¹ý³Ì	1.Ô¤±àÒë(gcc -e)		£¨1£©½«ËùÓÐµÄ#defineÉ¾³ý£¬²¢ÇÒÕ¹¿ªËùÓÐµÄºê¶¨Òå¡£Ëµ°×ÁË¾ÍÊÇ×Ö·ûÌæ»»		£¨2£©´¦ÀíËùÓÐµÄÌõ¼þ±àÒëÖ¸Áî£¬#ifdef #ifndef #endifµÈ£¬¾ÍÊÇ´ø#µÄÄÇÐ©		£¨3£©´¦Àí#include£¬½«#includeÖ¸ÏòµÄÎÄ¼þ²åÈëµ½¸ÃÐÐ´¦		£¨4£©É¾³ýËùÓÐ×¢ÊÍ		£¨5£©Ìí¼ÓÐÐºÅºÍÎÄ¼þ±êÊ¾£¬ÕâÑùµÄÔÚµ÷ÊÔºÍ±àÒë³ö´íµÄÊ±ºò²ÅÖªµÀÊÇÊÇÄÄ¸öÎÄ¼þµÄÄÄÒ»ÐÐ		£¨6£©±£Áô#pragma±àÒëÆ÷Ö¸Áî£¬ÒòÎª±àÒëÆ÷ÐèÒªÊ¹ÓÃËüÃÇ¡£	2.±àÒë(gcc -c)		 ±àÒëµÄ¹ý³ÌÊµÖÊÉÏÊÇ°Ñ¸ß¼¶ÓïÑÔ·­Òë³É»úÆ÷ÓïÑÔµÄ¹ý³Ì£¬¼´¶Ôa.c×öÁËÕâÐ©ÊÂ¶ù		£¨1£©´Ê·¨·ÖÎö£¬		£¨2£©Óï·¨·ÖÎö		£¨3£©ÓïÒå·ÖÎö		£¨4£©ÓÅ»¯ºóÉú³ÉÏàÓ¦µÄ»ã±à´úÂë		´Ó ¸ß¼¶ÓïÑÔ->»ã±àÓïÑÔ->»úÆ÷ÓïÑÔ£¨¶þ½øÖÆ£©	3.Á´½Ó(Êä³ö¿ÉÖ´ÐÐÎÄ¼þ)		µ«ÊÇ±àÒë¹ý³ÌÖ»ÊÇ°ÑÔ´ÎÄ¼þ·­Òë³É¶þ½øÖÆ¶øÒÑ£¬Õâ¸ö¶þ½øÖÆ»¹²»ÄÜÖ±½ÓÖ´ÐÐ£¬Õâ¸öÊ±ºò¾ÍÐèÒª×öÒ»¸ö¶¯×÷£¬		½«·­Òë³ÉµÄ¶þ½øÖÆÓëÐèÒªÓÃµ½¿â°ó¶¨ÔÚÒ»¿é¡£´ò¸ö±È·½±àÒëµÄ¹ý³Ì¾ÍÏòÄã¶ÔÄãÀÏÆÅËµ£¬ÎÒÒª³ÔÑ©¸â¡£ÄãÖ»ÊÇ¸øÄãÀÏÆÅ·¢³öÁËÄãÒª³Ô		Ñ©¸âµÄËßÇó¶øÒÑ£¬µ«ÊÇÑ©¸â»¹Ã»ÓÐµ½¡£°ó¶¨¾ÍÊÇËµÄãÒª³ÔµÄÑ©¸âÄãµÄÀÏÆÅÒÑ¾­¸øÄãÂòÁË£¬Äã¿ÉÒÔhappy¡£		
 	//ÀûÓÃauto_ptr<T>ÀàÀ´¹ÜÀí¶¯Ì¬×ÊÔ´µÄÊÍ·Å£¬Èç£ºauto_ptr<Stuendt> ptr(create_Studnet()); //create_Studnet()·µ»ØÒ»¸öStuendtÖ¸Õë
-	//¾²Ì¬³ÉÔ±±äÁ¿³õÊ¼»¯  ÀàÍâ³õÊ¼»¯£¬Èç£ºSinglton *Singlton::Instance = NULL;//ÖµÊÇ×Ô¼ºÖ¸¶¨µÄ£¬×¢Òâ*µÄÎ»ÖÃ	´ó¶ËºÍÐ¡¶Ë	/*		´ó¶ËµÍ×Ö½Ú´æ´¢¸ßÎ»£¨¸úÎÒÃÇÈÕ³£ÃèÊö·½Ê½Ò»Ñù£©£¬Ð¡¶Ë¸ß×Ö½Ú´æ´¢¸ßÎ»		Ó°Ïì£ºÍøÂç×Ö½ÚÐòÊÇ´ó¶Ë			union£¬CÓïÑÔÀàÐÍ×ª»»µÄÊ±ºò	*/	ÆÕÍ¨º¯ÊýºÍÎö¹¹º¯ÊýÔÊÐívirtual£¬ÆäËû¾Í²»ÔÊÐí		vs¶¯Ì¬¿âºÍ¾²Ì¬¿âµÄÊ¹ÓÃ	1.´´½¨¶¯Ì¬¿â		ÐÂ½¨Ò»¸öwin32ÏîÄ¿		Ñ¡ÔñdllºÍµ¼³ö·ûºÅ£¬ÆäÓàÄ¬ÈÏ		WIN32PROJECT1_API º¯ÊýÊÓÎªÊÇ´Ó DLL µ¼ÈëµÄ£¬¶ø´Ë DLL Ôò½«ÓÃ´Ëºê¶¨ÒåµÄ£¨ÆäÖÐWIN32PROJECT1Õâ²¿·ÖÌæ»»ÎªÎÄ¼þÃû±ã¿É£¬ÐÂµÄº¯ÊýºÍÐÂµÄÀà±ØÐëÌí¼ÓWIN32PROJECT1_APIºê²ÅÄÜ£©	2.Ê¹ÓÃ¶¯Ì¬¿â		1.¸´ÖÆ´´½¨µÄÏîÄ¿µÄdebugÄ¿Â¼ÏÂµÄdll(³ÌÐòÔËÐÐÊ±Ê¹ÓÃ)ºÍlibÎÄ¼þ(³ÌÐòÁ´½ÓÊ±Ê¹ÓÃ)£¬»¹ÓÐ¶¯Ì¬¿âµÄ.hÎÄ¼þ(±à³ÌÊ±Ê¹ÓÃ)		2.°ÑlibºÍhÎÄ¼þÕ³Ìùµ½ÐèÒªÊ¹ÓÃµÄÏîÄ¿µÄÔ´ÎÄ¼þ´¦£¨ÓëÏîÄ¿ÎÄ¼þµÄ.hºÍ.cppÍ¬Ò»´¦£©		3.dllÎÄ¼þÕ³Ìùµ½debug»òÕßreleaseÄ¿Â¼ÏÂ£¨×ÜÖ®Óë.exeÎÄ¼þÍ¬Ò»¸öÄ¿Â¼ÏÂ¾Í¿ÉÒÔÁË£©		4.Ìí¼ÓÒÀÀµ£¨Í·ÎÄ¼þºÍlibÎÄ¼þÒÀÀµ£©£º¾²Ì¬¿âºÍ¶¯Ì¬¿â¶¼ÐèÒªÅäÖÃ£¨ËûÃÇµÄÇø±ð½ö½öÊÇºÎÊ±µ¼Èë³ÌÐò£©			ÉèÖÃ¿âÄ¿Â¼£ºvs--ÊôÐÔ--Á´½ÓÆ÷--³£¹æ--¸½¼Ó¿âÄ¿Â¼--°ÑlibÎÄ¼þËùÔÚÄ¿Â¼ÌîÈë£¨µ±È»ÒÑ¾­¸´ÖÆµ½Ä¿Â¼ÏÂÖ®ºó¾Í²»ÊÇ±ØÐëÌí¼ÓµÄÁË£©			ÉèÖÃ¿â£ºvs---ÊôÐÔ--Á´½ÓÆ÷--ÊäÈë--ÒÀÀµÏî--°ÑlibÃû×ÖÌîÈë£¨ÕâÒ»²½±ØÐë×ö£©			ÉèÖÃÍ·ÎÄ¼þÄ¿Â¼£ºvs--ÊôÐÔ--VC++Ä¿Â¼--°üº¬Ä¿Â¼--°ÑÍ·ÎÄ¼þËùÔÚÄ¿Â¼ÌîÈë£¨µ±È»ÒÑ¾­¸´ÖÆµ½Ä¿Â¼ÏÂÖ®ºó¾Í²»ÊÇ±ØÐëÌí¼ÓµÄÁË£©																																																																			
+	//¾²Ì¬³ÉÔ±±äÁ¿³õÊ¼»¯  ÀàÍâ³õÊ¼»¯£¬Èç£ºSinglton *Singlton::Instance = NULL;//ÖµÊÇ×Ô¼ºÖ¸¶¨µÄ£¬×¢Òâ*µÄÎ»ÖÃ	´ó¶ËºÍÐ¡¶Ë	/*		´ó¶ËµÍ×Ö½Ú´æ´¢¸ßÎ»£¨¸úÎÒÃÇÈÕ³£ÃèÊö·½Ê½Ò»Ñù£©£¬Ð¡¶Ë¸ß×Ö½Ú´æ´¢¸ßÎ»		Ó°Ïì£ºÍøÂç×Ö½ÚÐòÊÇ´ó¶Ë			union£¬CÓïÑÔÀàÐÍ×ª»»µÄÊ±ºò	*/	ÆÕÍ¨º¯ÊýºÍÎö¹¹º¯ÊýÔÊÐívirtual£¬ÆäËû¾Í²»ÔÊÐí		vs¶¯Ì¬¿âºÍ¾²Ì¬¿âµÄÊ¹ÓÃ	1.´´½¨¶¯Ì¬¿â		ÐÂ½¨Ò»¸öwin32ÏîÄ¿		Ñ¡ÔñdllºÍµ¼³ö·ûºÅ£¬ÆäÓàÄ¬ÈÏ		WIN32PROJECT1_API º¯ÊýÊÓÎªÊÇ´Ó DLL µ¼ÈëµÄ£¬¶ø´Ë DLL Ôò½«ÓÃ´Ëºê¶¨ÒåµÄ£¨ÆäÖÐWIN32PROJECT1Õâ²¿·ÖÌæ»»ÎªÎÄ¼þÃû±ã¿É£¬ÐÂµÄº¯ÊýºÍÐÂµÄÀà±ØÐëÌí¼ÓWIN32PROJECT1_APIºê²ÅÄÜ£©	2.Ê¹ÓÃ¶¯Ì¬¿â		1.¸´ÖÆ´´½¨µÄÏîÄ¿µÄdebugÄ¿Â¼ÏÂµÄdll(³ÌÐòÔËÐÐÊ±Ê¹ÓÃ)ºÍlibÎÄ¼þ(³ÌÐòÁ´½ÓÊ±Ê¹ÓÃ)£¬»¹ÓÐ¶¯Ì¬¿âµÄ.hÎÄ¼þ(±à³ÌÊ±Ê¹ÓÃ)		2.°ÑlibºÍhÎÄ¼þÕ³Ìùµ½ÐèÒªÊ¹ÓÃµÄÏîÄ¿µÄÔ´ÎÄ¼þ´¦£¨ÓëÏîÄ¿ÎÄ¼þµÄ.hºÍ.cppÍ¬Ò»´¦£©		3.dllÎÄ¼þÕ³Ìùµ½debug»òÕßreleaseÄ¿Â¼ÏÂ£¨×ÜÖ®Óë.exeÎÄ¼þÍ¬Ò»¸öÄ¿Â¼ÏÂ¾Í¿ÉÒÔÁË£©		4.Ìí¼ÓÒÀÀµ£¨Í·ÎÄ¼þºÍlibÎÄ¼þÒÀÀµ£©£º¾²Ì¬¿âºÍ¶¯Ì¬¿â¶¼ÐèÒªÅäÖÃ£¨ËûÃÇµÄÇø±ð½ö½öÊÇºÎÊ±µ¼Èë³ÌÐò£©			ÉèÖÃ¿âÄ¿Â¼£ºvs--ÊôÐÔ--Á´½ÓÆ÷--³£¹æ--¸½¼Ó¿âÄ¿Â¼--°ÑlibÎÄ¼þËùÔÚÄ¿Â¼ÌîÈë£¨µ±È»ÒÑ¾­¸´ÖÆµ½Ä¿Â¼ÏÂÖ®ºó¾Í²»ÊÇ±ØÐëÌí¼ÓµÄÁË£©			ÉèÖÃ¿â£ºvs---ÊôÐÔ--Á´½ÓÆ÷--ÊäÈë--ÒÀÀµÏî--°ÑlibÃû×ÖÌîÈë£¨ÕâÒ»²½±ØÐë×ö£©			ÉèÖÃÍ·ÎÄ¼þÄ¿Â¼£ºvs--ÊôÐÔ--VC++Ä¿Â¼--°üº¬Ä¿Â¼--°ÑÍ·ÎÄ¼þËùÔÚÄ¿Â¼ÌîÈë£¨µ±È»ÒÑ¾­¸´ÖÆµ½Ä¿Â¼ÏÂÖ®ºó¾Í²»ÊÇ±ØÐëÌí¼ÓµÄÁË£©		¶¯Ì¬¿âºÍ¾²Ì¬¿âµÄÌØµã			¾²Ì¬¿âÖ±½Ó¼ÓÔØµ½³ÌÐòµ±ÖÐµÄ£¬ËùÒÔÔËÐÐËÙ¶È½Ï¿ì£¬²¢ÇÒÒòÎª¼ÓÔØµ½¿ÉÖ´ÐÐ³ÌÐòÖ®ÖÐÁË£¬ËùÒÔ·¢²¼µÄÊ±ºò²»ÐèÒª.libÎÄ¼þÁË£¬µ«ÊÇÏà¶ÔÀ´ËµÌå»ýÒ²±È½Ï´ó			¶¯Ì¬¿âÓë¾²Ì¬¿âÊÇ»¥²¹µÄ	È«»º³å£¬ÐÐ»º³åºÍÎÞ»º³å£¨flushË¢ÐÂ»º³å£©		1.È«»º³å(_IOFBF)£ºµ±ÊäÈë»òÕßÊä³ö»º³åÇø±»ÌîÂúÁË£¬²Å»á»á½øÐÐÊµ¼ÊI/O²Ù×÷£¨¶Ô´ÅÅÌÎÄ¼þµÄ²Ù×÷Í¨³£ÊÇÈ«»º³åµÄ£¬write£¬read£©		2.ÐÐ»º³å(_IOLBF)£ºÊäÈë»òÊä³ö»º³åÇøÓöµ½»»ÐÐ·û»á½øÐÐÊµ¼ÊµÄI/O¶ÁÐ´²Ù×÷¡££¨printf£¬scanf£©		3.ÎÞ»º³å(_IONBF)£ºÃ»ÓÐ»º³åÇø£¬Êý¾Ý»áÁ¢¼´¶ÁÐ´½øÍâ´æÉè±¸»òÕßÎÄ¼þµ±ÖÐ£¨stderr¾ÍÊÇÎÞ»º³åµÄ£¬±£Ö¤´íÎóÊµÊ±·´À¡µ½ÓÃ»§£©		ÉèÖÃ»º³åÇø£º			void setbuf(FILE *stream, char *buffer);//ÎÄ¼þÖ¸ÕëºÍ»º³åÇøµØÖ·£¨¿ÉÒÔÉèÖÃÎªstdout,NULL ¹Ø±ÕÊä³ö»º³åÇø£©			void setbuffer(FILE *stream, char *buf, size_t size);//ÓëÉÏ»ù±¾Ò»ÖÂ£¬µ«¿ÉÒÔÖ¸¶¨»º³åÇø´óÐ¡			int setvbuf(FILE *stream, char *buf, int mode, size_t size);//ÉèÖÃ»º³åÇøÀàÐÍ				setvbuf(stream,NULL,_IOLBF,0);  //½«»º³å¸ÄÎªÐÐ»º³å£¬¿ÉÒÔÕâÑùÉèÖÃµÄÇ°ÌáÊÇ´æÔÚ»º³åÇø				setlinebuf(stream);  //ÔÚlinuxÖÐ£¬ÉÏÃæµÄ´úÂëµÈ¼ÛÓÚ																																																																			
 1.±àÂë¹æÔò£ºÃ¿¸ö×Ö·ûÐòÁÐ×ÜÊÇÒÔ¡°ºÏ·¨·ûºÅÐòÁÐ¡±×î³¤µÄ½âÊÍ£¬Èç£º
 vector< vector<int> > seq;ÖÐµÄ¡°>>¡±ÊÇºÏ·¨×Ö·û£¬ËùÒÔ»á±»½âÎªÁ½¸ö>,ËùÒÔµÃ¼Ó¿Õ¸ñ¡£
 2.Çø±ðºÎÊ±Ó¦¡°&¡±ºÍ¡°*¡±£¬ÔÚ¶ÔÏó¿ÉÒÔÎªnullÊ±£¬±ãÓÃpoint£¬²»ÄÜÎªnull±ã¿ÉÒÔÓÃreference·û£¬ÆäÓàµÄÓÃ·¨Á½ÕßÀàËÆ£»
@@ -574,29 +574,28 @@ fill(.begin(),.end(),Ìî³äÊý¾Ý)ÔªËØÌî³ä
 WaitForSingleObject(hThread[i], INFINITE);//²ÎÊý £º´´½¨Ïß³ÌÊ±·µ»ØµÄ¾ä±ú £¬µÈ´ýÊ±¼äpthread_join(ptid)
 Ö÷½ø³Ìµ÷ÓÃ¸Ãº¯Êý£¬±íÊ¾ÒªµÈ´ýËùÓÐ×ÓÏß³Ì½áÊøÔÚÍùÏÂÖ´ÐÐ£¬µ±ÓÐ×ÓÏß³ÌÖ´ÐÐÊ±£¬ÏµÍ³ÄÚºË·¢À´¹ÒÆðÐÅºÅ£¬¸Ã½ø³Ì±»¹ÒÆð£¬Ö±µ½×Ó½ø³ÌÈ«²¿½áÊø£¬ÔÙÀ­½øÏµÍ³µÄµÈ´ý¶ÓÁÐÖÐµÈ´ýÖ´ÐÐ
 Ã»ÓÐ¸Ã¾ä´úÂë¿ÉÄÜ»á²úÉúµÄÎÊÌâÊÇ£º¸¸½ø³ÌÖ´ÐÐÍêºó£¬×ÓÏß³Ì»á±»Ç¿ÖÆ½áÊø
-128.¿ÉÒÔÌí¼Ó´úÂë£¬²»ÄÜÖ±½Ó¸Ä¶¯Ô­ÓÐ´úÂë
-ÃæÏò³éÏóÀà±à³Ì£¨ÊÂÎï¿ÉÒÔ½øÐÐ¸î·Ö£¬¾Í¿ÉÒÔ½øÐÐ³éÏó£¬±ÈÈç½¨ÔìÕßÓÐ½¨ÔìÆ½·¿µÄ£¬½¨Ôì±ðÊûµÄ£¬ÈËÓÐÄÐÈË£¬Å®ÈË£©
-
-129.£¨´úÂëÔÚÉè¼ÆÄ£Ê½ÖÐ£©
-1.¹¤³§Ä£Ê½°¸Àý:¹¤³§Éú²úË®¹û£¨Ã¿¸ö¹¤³§Ö»ÄÜÉú²úÒ»ÖÖË®¹û£©
-2.³éÏó¹¤³§Ä£Ê½°¸Àý:Éú²ú¶àÖÖË®¹û£¨°Ñ¹¤³§Ò²³éÏó»¯Îª¿ÉÒÔ¶àÖÖË®¹û¹¤³§£©
-3.½¨ÔìÕßÄ£Ê½°¸Àý:½¨·¿×Ó£¨±ð°Ñ½¨ÔìÈ¨½»¸ø¿Í»§£¬Ê©¹¤¶Ó¿ÉÒÔ½øÐÐ·Ö½âÒ²¾ÍÊÇ³éÏó»¯£©
-4.´úÀíÄ£Ê½°¸Àý:µ±µ±ÍøÂòÊé£¨AÀà°üº¬BÀàÀ´Ö´ÐÐBÀàµÄ¹¦ÄÜ£¬Ò²¾ÍÊÇ´ú´ò£©
-5.×°ÊÎÄ£Ê½°¸Àý:³µÌí¼Ó¹¦ÄÜÅÜ£¬·É£¬ÓÎ£¨AÀà°üº¬BÀàÀ´Ö´ÐÐBÀàµÄ¹¦ÄÜ£¬Í¬Ê±ÊµÏÖ×Ô¼ºµÄ¹¦ÄÜ£¬ÔÙ°ÑËü·Å½øÐ­Òéº¯ÊýÀïÃæÀ©Õ¹¹¦ÄÜ£©£¬Èç£º
-class C{virtual void dothing()=0;};   class B:public C{virtual void dothing(){//ÅÜ}}  class A:public C{ A(C *c):m_c(c){}  void fly(){}  virtual void dothing(){fly();  m_c.dothing();}    private:C *c;};
-6.ÊÊÅäÆ÷Ä£Ê½°¸Àý:¸øµçÄÔ¹©µç£¨°ÑÒ»¸ö²»ÊÊÓÃµÄ½Ó¿Ú×ª»»ÎªÁíÒ»¸öÊÊÓÃµÄ½Ó¿Ú£©
-7.ÇÅ½ÓÄ£Ê½°¸Àý:Æû³µºÍ·¢¶¯»ú£¨¶àºÍ¶àÖ®¼äµÄ¹ØÏµ£©
-8.Ä£°åÄ£Ê½°¸Àý:½¨Ôì³µ×Ó£¨°ÑÒµÎñÂß¼­¼¯³ÉÔÚ³éÏóÀàÖÐ£©
-NVI»úÖÆ£¨Ä£°åÄ£Ê½ÏÂµÄ°¸Àý£¬ºÃ´¦ÊÇ¿ÉÒÔ¼¯³ÉÒµÎñÂß¼­£¬ÈçÐè¼ÓËøÖ»ÐèÒªÔÚ»ùÀàÖÐÐÞ¸Ä´úÂë£©£¬ÀýÈç
-	class Base{  
-	public:  
-	void Foo(){  //Ä£°å£¬ÊµÏÖÒµÎñÂß¼­£¬¹«ÓÐ·ÇÐéº¯Êý
-	DoFoo1();  
-	DoFoo2();  
-	}//use DoFooX()  
-	private:  
-	virtual void DoFoo1(){  //ÊµÏÖÄ¬ÈÏ¹¦ÄÜ£¬Ë½ÓÐÐéº¯Êý
-	cout << "Base's DoFoo1" <<endl;  
+128.¿ÉÒÔÌí¼Ó´úÂë£¬²»ÄÜÖ±½Ó¸Ä¶¯Ô­ÓÐ´úÂë
+ÃæÏò³éÏóÀà±à³Ì£¨ÊÂÎï¿ÉÒÔ½øÐÐ¸î·Ö£¬¾Í¿ÉÒÔ½øÐÐ³éÏó£¬±ÈÈç½¨ÔìÕßÓÐ½¨ÔìÆ½·¿µÄ£¬½¨Ôì±ðÊûµÄ£¬ÈËÓÐÄÐÈË£¬Å®ÈË£©
+129.£¨´úÂëÔÚÉè¼ÆÄ£Ê½ÖÐ£©
+1.¹¤³§Ä£Ê½°¸Àý:¹¤³§Éú²úË®¹û£¨Ã¿¸ö¹¤³§Ö»ÄÜÉú²úÒ»ÖÖË®¹û£©
+2.³éÏó¹¤³§Ä£Ê½°¸Àý:Éú²ú¶àÖÖË®¹û£¨°Ñ¹¤³§Ò²³éÏó»¯Îª¿ÉÒÔ¶àÖÖË®¹û¹¤³§£©
+3.½¨ÔìÕßÄ£Ê½°¸Àý:½¨·¿×Ó£¨±ð°Ñ½¨ÔìÈ¨½»¸ø¿Í»§£¬Ê©¹¤¶Ó¿ÉÒÔ½øÐÐ·Ö½âÒ²¾ÍÊÇ³éÏó»¯£©
+4.´úÀíÄ£Ê½°¸Àý:µ±µ±ÍøÂòÊé£¨AÀà°üº¬BÀàÀ´Ö´ÐÐBÀàµÄ¹¦ÄÜ£¬Ò²¾ÍÊÇ´ú´ò£©
+5.×°ÊÎÄ£Ê½°¸Àý:³µÌí¼Ó¹¦ÄÜÅÜ£¬·É£¬ÓÎ£¨AÀà°üº¬BÀàÀ´Ö´ÐÐBÀàµÄ¹¦ÄÜ£¬Í¬Ê±ÊµÏÖ×Ô¼ºµÄ¹¦ÄÜ£¬ÔÙ°ÑËü·Å½øÐ­Òéº¯ÊýÀïÃæÀ©Õ¹¹¦ÄÜ£©£¬Èç£º
+	class C{virtual void dothing()=0;};   class B:public C{virtual void dothing(){ÅÜ}}  class A:public C{ A(C *c):m_c(c){}  void fly(){}  virtual void dothing(){fly();  m_c.dothing();}    private:C *c;};
+6.ÊÊÅäÆ÷Ä£Ê½°¸Àý:¸øµçÄÔ¹©µç£¨°ÑÒ»¸ö²»ÊÊÓÃµÄ½Ó¿Ú×ª»»ÎªÁíÒ»¸öÊÊÓÃµÄ½Ó¿Ú£©
+7.ÇÅ½ÓÄ£Ê½°¸Àý:Æû³µºÍ·¢¶¯»ú£¨¶àºÍ¶àÖ®¼äµÄ¹ØÏµ£©
+8.Ä£°åÄ£Ê½°¸Àý:½¨Ôì³µ×Ó£¨°ÑÒµÎñÂß¼­¼¯³ÉÔÚ³éÏóÀàÖÐ£©
+NVI»úÖÆ£¨Ä£°åÄ£Ê½ÏÂµÄ°¸Àý£¬ºÃ´¦ÊÇ¿ÉÒÔ¼¯³ÉÒµÎñÂß¼­£¬ÈçÐè¼ÓËøÖ»ÐèÒªÔÚ»ùÀàÖÐÐÞ¸Ä´úÂë£©£¬ÀýÈç
+	class Base{  
+	public:  
+	void Foo(){  //Ä£°å£¬ÊµÏÖÒµÎñÂß¼­£¬¹«ÓÐ·ÇÐéº¯Êý
+	DoFoo1();  
+	DoFoo2();  
+	}//use DoFooX()  
+	private:  
+	virtual void DoFoo1(){  //ÊµÏÖÄ¬ÈÏ¹¦ÄÜ£¬Ë½ÓÐÐéº¯Êý
+	cout << "Base's DoFoo1" <<endl;  
 	}  
 	virtual void DoFoo2(){  
 	cout << "Base's DoFoo2" <<endl;  
@@ -620,13 +619,12 @@ NVI»úÖÆ£¨Ä£°åÄ£Ê½ÏÂµÄ°¸Àý£¬ºÃ´¦ÊÇ¿ÉÒÔ¼¯³ÉÒµÎñÂß¼­£¬ÈçÐè¼ÓËøÖ»ÐèÒªÔÚ»ùÀàÖÐÐÞ¸Ä´úÂ
 18.µü´úÆ÷Ä£Ê½°¸Àý:Êý×éµÄµü´úÆ÷£¨µü´úÆ÷ÖÐÖ±½Ó¹ØÁªÊý×éÀà£©
 
 130.Ç°ÖÃÉùÃ÷½â¾öÁ½¸öÀàµÄ»¥ÏàÒÀÀµÎÊÌâ£¬ÒÔÏÂÊÇÐèÒª×¢ÒâµÄÊÂÏî£º
-¹¹Ôì³¡¾°£ºclass B;//ÉùÃ÷Ê½   class A{B *b;};   class B{A *a};
-1.²»ÄÜÖ±½Ó¶¨Òå¶ÔÏó£¬¿ÉÒÔ¶¨Òå¶ÔÏóµÄÖ¸Õë»òÕßÒýÓÃ
-2.²»ÄÜÔÚAÀàµÄÉùÃ÷Ê½ÖÐÊ¹ÓÃBÀàµÄº¯Êý£¬ÒòÎªBÀà»¹Ã»ÓÐ³öÀ´£¨ÉùÃ÷Ê½Ö¸µÄÊÇ£ºclass A{ÕâÀïÃæ}£¬·ÅÔÚÍâÃæµÄ½Ð×ö¶¨ÒåÊ½£¬¿ÉÒÔÊ¹ÓÃBÀàº¯Êý£©
-3.²»ÄÜÔÚBÀà¶¨ÒåÖ®Ç°µ÷ÓÃBÀàµÄÎö¹¹º¯Êý
-4.µ±ÄãÉùÃ÷Ò»¸öº¯ÊýËûÊ¹ÓÃµ½Ä³¸öclassÊ±£¬²»ÐèÒªclassµÄ¶¨Òå£¬¼´Ê¹º¯ÊýÒÔby value·½Ê½´«µÝ²ÎÊý£¨»òÕß·µ»ØÖµ£©
-5.¼Ì³ÐÊ±£¬±»¼Ì³ÐµÄÀàÔÚ±àÒëÊ±¶¨Òå±ØÐë¿É¼û£¨ËùÒÔ·ÅÔÚÍ·ÎÄ¼þ»òÕßÖ±½Ó·ÅÔÚ×ÓÀàÇ°Ãæ£©
-½áÂÛ:°ÑÉùÃ÷Ê½ºÍ¶¨ÒåÊ½·Ö¿ª
+¹¹Ôì³¡¾°£ºclass B;//ÉùÃ÷Ê½   class A{B *b;};   class B{A *a};*****0.°ÑAÀàµÄ¶¨Òå·ÅÔÚBÀàµÄÀàÉùÃ÷ºóÃæ²Å¿ÉÒÔÊ¹ÓÃBÀàµÄÖ¸Õë»òÕßÒýÓÃ£¨class B{A *a}; Ò»¶¨µÃ·ÅÔÚËüµÄºó±ß£©
+1.²»ÄÜÖ±½Ó¶¨Òå¶ÔÏó£¬¿ÉÒÔ¶¨Òå¶ÔÏóµÄÖ¸Õë»òÕßÒýÓÃ
+2.²»ÄÜÔÚAÀàÖÐÊ¹ÓÃBÀàº¯Êý
+3.²»ÄÜÔÚBÀà¶¨ÒåÖ®Ç°µ÷ÓÃBÀàµÄÎö¹¹º¯Êý
+4.µ±ÄãÉùÃ÷Ò»¸öº¯ÊýËûÊ¹ÓÃµ½Ä³¸öclassÊ±£¬²»ÐèÒªclassµÄ¶¨Òå£¬¼´Ê¹º¯ÊýÒÔby value·½Ê½´«µÝ²ÎÊý£¨»òÕß·µ»ØÖµ£©
+5.¼Ì³ÐÊ±£¬±»¼Ì³ÐµÄÀàÔÚ±àÒëÊ±¶¨Òå±ØÐë¿É¼û½áÂÛ:°ÑÉùÃ÷Ê½ºÍ¶¨ÒåÊ½·Ö¿ª
 
 131.CÓïÑÔ¶ÁÈ¡ÎÄ¼þ
 FILE *file = fopen(ÎÄ¼þÃû,¶ÁÈ¡Ä£Ê½);
@@ -649,4 +647,4 @@ fputs(×Ö·û´®,file)°Ñ×Ö·û´®Ð´ÈëÎÄ¼þ
 
 int seq;
 char buf[1024] = { 0 };
-sprintf(buf,"%d",seq);//°ÑÊý×Ö×ª»¯Îª×Ö·û´®mallocºÍrealloc£¨½Ó×Åmallocºó·ÖÅäµÄÄÚ´æ£©
+sprintf(buf,"%d",seq);//°ÑÊý×Ö×ª»¯Îª×Ö·û´®mallocºÍrealloc£¨½Ó×Åmallocºó·ÖÅäµÄÄÚ´æ£©132.ÖÇÄÜÖ¸Õë£¨±ð°ÑthisÖ¸Õë·Å½øÈ¥£¬ÒòÎªÄã²»ÖªµÀÖÇÄÜÖ¸ÕëºÎÊ±°ÑÄãµÄthisÎö¹¹µô£©(#include <memory.h>)auto_ptrµÄ¼¸µã×¢ÒâÊÂÏî£º£¨auto_ptrÊÇ¶ÀÕ¼µÄ£¬Í¬Ò»¸öÖ¸ÕëÍ¬Ê±Ö»¿ÉÒÔ´æÔÚÒ»¸ö¶ÔÏóÖÐ£©	1¡¢auto_ptr²»ÄÜ¹²ÏíËùÓÐÈ¨(¸³Öµ»áÔì³ÉËùÓÐÈ¨×ªÒÆ£¬Ô­±¾µÄÖ¸ÕëÖ¸Ïò±äÎªNULL)	2¡¢auto_ptr²»ÄÜÖ¸ÏòÊý×é£¨auto_ptrµÄÎö¹¹º¯ÊýÊÇdelete ptr; ¶ø²»ÊÇ delete []ptr;£©	3¡¢auto_ptr²»ÄÜ×÷ÎªÈÝÆ÷µÄ³ÉÔ± (²»ÄÜ½øÐÐ¿½±´)	4¡¢²»ÄÜÍ¨¹ý¸´ÖÆ²Ù×÷À´³õÊ¼»¯auto_ptr	std::auto_ptr<int> p(new int(42)); //OK	std::atuo_ptr<int>p = new int(42);//Error	ÕâÊÇÒòÎªauto_ptrµÄ¹¹Ôìº¯Êý±»¶¨ÒåÁËexplicit(#include "boost/shared_ptr.hpp")boost::shared_ptr<T>£º	1.ÔÚÊ¹ÓÃÒýÓÃ¼ÆÊýµÄ»úÖÆÉÏÌá¹©ÁË¿ÉÒÔ¹²ÏíËùÓÐÈ¨µÄÖÇÄÜÖ¸Õë£¨µ±µ÷ÓÃ¸³ÖµÔËËã·û»òÕß¿½±´¹¹Ôìº¯ÊýÊ±£¬ÒýÓÃ¼ÆÊý¼ÓÒ»£©	2.µ÷ÓÃÖ±½ÓÓÃÖ¸Õë¹¹ÔìµÄ¹¹Ôìº¯ÊýÊ±£¬ÒýÓÃ¼ÆÊý³õÊ¼»¯Îª1£¨Ò²¾ÍÔì³É¶à´ÎÊ¹ÓÃÏàÍ¬Ö¸Õë¹¹Ôì¶ÔÏóÊ±£¬µ±Ò»¸ö¶ÔÏó±»Îö¹¹ºó¾Í»á·¢Éú´íÎó£©	3.µ±ÒýÓÃ¼ÆÊýÎª0Ê±£¬ÊÍ·ÅÖ¸ÕëÄÚ´æ	4.shared_ptr¿ÉÒÔÓÃÀ´ÈÝÄÉ¶àÌ¬¶ÔÏó£¨ÒâË¼ÊÇ¿ÉÒÔÊ¹ÓÃ×ÓÀàÖ¸ÕëÀ´³õÊ¼»¯¸¸ÀàÖÇÄÜÖ¸Õë¶ÔÏó£©	5.Ïß³Ì°²È«	6.¿É±»·ÅÈë±ê×¼¿âµÄÒ»°ãÈÝÆ÷£¨vector£¬listµÈ£©(#include "boost/weak_ptr.hpp")boost::weak_ptr<T>:	1.weak_ptrÊÇÎªÅäºÏshared_ptr¶øÒýÈëµÄÒ»ÖÖÖÇÄÜÖ¸ÕëÀ´Ð­Öúshared_ptr¹¤×÷£¬Ëü¿ÉÒÔ´ÓÒ»¸öshared_ptr»òÁíÒ»¸öweak_ptr¶ÔÏó¹¹Ôì£¬	  ËüµÄ¹¹ÔìºÍÎö¹¹²»»áÒýÆðÒýÓÃ¼ÇÊýµÄÔö¼Ó»ò¼õÉÙ¡£Ã»ÓÐÖØÔØ*ºÍ->µ«¿ÉÒÔÊ¹ÓÃlock»ñµÃÒ»¸ö¿ÉÓÃµÄshared_ptr¶ÔÏó¡£	2.¿ÉÒÔ½â¾öÑ­»·ÒýÓÃÎÊÌâ(ÈõÒýÓÃÖÇÄÜÖ¸Õë£¬²»»á½øÐÐÒýÓÃ¼ÆÊý)(#include "boost/scoped_ptr.hpp")boost::scoped_ptr<T>:	boost::scoped_ptr ÓÃÓÚÈ·±£¶¯Ì¬·ÖÅäµÄ¶ÔÏóÄÜ¹»±»ÕýÈ·µØÉ¾³ý¡£scoped_ptr ÓÐ×ÅÓëstd::auto_ptrÀàËÆµÄÌØÐÔ£¬	¶ø×î´óµÄÇø±ðÔÚÓÚËü²»ÄÜ×ªÈÃËùÓÐÈ¨¶øauto_ptr¿ÉÒÔ¡£ÊÂÊµÉÏ£¬scoped_ptrÓÀÔ¶²»ÄÜ±»¸´ÖÆ»ò±»¸³Öµ£¡scoped_ptr ÓµÓÐËüËùÖ¸ÏòµÄ×ÊÔ´µÄËùÓÐÈ¨£¬	²¢ÓÀÔ¶²»»á·ÅÆúÕâ¸öËùÓÐÈ¨¡£scoped_ptrµÄÕâÖÖÌØÐÔÌáÉýÁËÎÒÃÇµÄ´úÂëµÄ±íÏÖ£¬ÎÒÃÇ¿ÉÒÔ¸ù¾ÝÐèÒªÑ¡Ôñ×îºÏÊÊµÄÖÇÄÜÖ¸Õë(scoped_ptr »ò auto_ptr)¡£
